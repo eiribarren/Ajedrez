@@ -6,6 +6,7 @@ public class Peon extends Pieza{
 	private int posicionXInicial;
 	private int posicionYInicial;
 	public Peon(Color color, int posicionY, int posicionX) {
+		this.identificador = "Peon";
 		this.posicionY = posicionY;
 		this.posicionX = posicionX;
 		this.posicionXInicial = posicionX;

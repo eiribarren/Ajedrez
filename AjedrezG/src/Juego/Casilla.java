@@ -52,6 +52,7 @@ public class Casilla extends JPanel{
 					ponerPieza(piezaEnFoco);
 				}
 				casillaEnFoco.repaint();
+				tablero.setText("El jugador " + tablero.getJugadorActual() + " ha movido el " + pieza.toString() + " a la " + yoMismo().toString());
 				tablero.setJugadorActual();
 				for ( Casilla casilla : casillasConFoco ) {
 					if ( casilla != null ) {
@@ -99,5 +100,9 @@ public class Casilla extends JPanel{
 	public String toString() {
 		String frase = "Casilla " + getPosicionY() + ":" + getPosicionX();
 		return frase;
+	}
+	
+	public Casilla yoMismo() {
+		return this;
 	}
 }

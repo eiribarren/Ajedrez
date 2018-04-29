@@ -3,6 +3,8 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class Tablero extends JPanel{
 	private final int COLUMNAS = 8;
@@ -13,6 +15,7 @@ public class Tablero extends JPanel{
 	private Jugador segundoJugador;
 	private Jugador jugadorActual;
 	private Casilla casillaEnFoco;
+	private JLabel informacionUsuario;
 	
 	public Tablero(Jugador primerJugador, Jugador segundoJugador) {
 		this.primerJugador = primerJugador;
@@ -30,8 +33,12 @@ public class Tablero extends JPanel{
 		JPanel maestro = new JPanel();
 		JPanel tablero = new JPanel();
 		JPanel interfazUsuario = new JPanel();
+		informacionUsuario = new JLabel();
+		
+		informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 23));
 		
 		maestro.setPreferredSize(new Dimension(1000,1000));
+		interfazUsuario.add(informacionUsuario);
 		interfazUsuario.setPreferredSize(new Dimension(900,180));
 		interfazUsuario.setBackground(Color.WHITE);
 		interfazUsuario.setVisible(true);
@@ -123,7 +130,6 @@ public class Tablero extends JPanel{
 			if ( movimientoX > 7 || movimientoX < 0 || movimientoY > 7 || movimientoY < 0 ) {
 				continue;
 			} else {
-				System.out.println(casillas[movimientoX][movimientoY]);
 				casillasConFoco[i] = casillas[movimientoX][movimientoY];
 				casillas[movimientoX][movimientoY].focus(pieza, casillasConFoco);
 			}
@@ -145,5 +151,9 @@ public class Tablero extends JPanel{
 	
 	public Jugador getJugadorActual() {
 		return jugadorActual;
+	}
+	
+	public void setText(String text) {
+		this.informacionUsuario.setText(text); 
 	}
 }
