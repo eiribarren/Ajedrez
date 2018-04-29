@@ -45,14 +45,20 @@ public class Casilla extends JPanel{
 				Tablero tablero = Partida.getTablero(); 
 				Casilla casillaEnFoco = tablero.getCasillaEnFoco();
 				Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
+				String piezaDestruida = "";
 				if ( piezaEnFoco == null ) {
 					System.out.print("eh?");
 				} else {
 					piezaEnFoco.setPosicion(getPosicionX(), getPosicionY());
-					ponerPieza(piezaEnFoco);
+					piezaDestruida = ponerPieza(piezaEnFoco);
 				}
 				casillaEnFoco.repaint();
-				tablero.setText("El jugador " + tablero.getJugadorActual() + " ha movido el " + pieza.toString() + " a la " + yoMismo().toString());
+				tablero.setText("El jugador " + tablero.getJugadorActual() + " ha movido el " + pieza.toString() + " a la " + yoMismo().toString(), "informacionUsuario");
+				if ( piezaDestruida != "" ) {
+					tablero.setText("La pieza " + piezaEnFoco.toString() + " del jugador " + tablero.getJugadorActual().toString() + " ha destruido la pieza " + piezaDestruida + " del rival.", "informacionCombate");
+				} else {
+					tablero.setText("", "informacionCombate");
+				}
 				tablero.setJugadorActual();
 				for ( Casilla casilla : casillasConFoco ) {
 					if ( casilla != null ) {
@@ -69,10 +75,15 @@ public class Casilla extends JPanel{
 		this.repaint();
 		this.removeMouseListener(mousead);
 	}
-	public void ponerPieza( Pieza pieza ) {
-		
+	public String ponerPieza( Pieza pieza ) {
+		String nombrePiezaDestruida = "";
+		if ( this.tienePieza() ) {
+			nombrePiezaDestruida = this.pieza.toString();
+			this.remove(this.pieza);
+		}
 		this.pieza = pieza;
 		this.add(pieza);
+		return nombrePiezaDestruida;
 	}
 	
 	public Pieza quitarPieza() {

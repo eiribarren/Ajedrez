@@ -16,6 +16,7 @@ public class Tablero extends JPanel{
 	private Jugador jugadorActual;
 	private Casilla casillaEnFoco;
 	private JLabel informacionUsuario;
+	private JLabel informacionCombate;
 	
 	public Tablero(Jugador primerJugador, Jugador segundoJugador) {
 		this.primerJugador = primerJugador;
@@ -34,11 +35,14 @@ public class Tablero extends JPanel{
 		JPanel tablero = new JPanel();
 		JPanel interfazUsuario = new JPanel();
 		informacionUsuario = new JLabel();
+		informacionCombate = new JLabel();
 		
 		informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 23));
+		informacionCombate.setFont(new Font("Arial", Font.PLAIN, 23));
 		
 		maestro.setPreferredSize(new Dimension(1000,1000));
 		interfazUsuario.add(informacionUsuario);
+		interfazUsuario.add(informacionCombate);
 		interfazUsuario.setPreferredSize(new Dimension(900,180));
 		interfazUsuario.setBackground(Color.WHITE);
 		interfazUsuario.setVisible(true);
@@ -125,13 +129,22 @@ public class Tablero extends JPanel{
 		int movimientoX;
 		int movimientoY;
 		for ( int i = 0 ; i < movimientos.length ; i++ ) {
-			movimientoX = movimientos[i][0];
-			movimientoY = movimientos[i][1];
+			movimientoY = movimientos[i][0];
+			movimientoX = movimientos[i][1];
 			if ( movimientoX > 7 || movimientoX < 0 || movimientoY > 7 || movimientoY < 0 ) {
 				continue;
 			} else {
-				casillasConFoco[i] = casillas[movimientoX][movimientoY];
-				casillas[movimientoX][movimientoY].focus(pieza, casillasConFoco);
+				if ( pieza instanceof Peon ) {
+					if ( movimientoX != pieza.posicionX + 1  && movimientoX != pieza.posicionX - 1 ) {
+						if ( casillas[movimientoY][movimientoX].tienePieza() ) {
+							continue;
+						}
+					} else if ( !casillas[movimientoY][movimientoX].tienePieza() ) {
+						continue;
+					}
+				}
+				casillasConFoco[i] = casillas[movimientoY][movimientoX];
+				casillas[movimientoY][movimientoX].focus(pieza, casillasConFoco);
 			}
 		}
 		
@@ -153,7 +166,11 @@ public class Tablero extends JPanel{
 		return jugadorActual;
 	}
 	
-	public void setText(String text) {
-		this.informacionUsuario.setText(text); 
+	public void setText(String text, String label) {
+		if ( label.equals("informacionUsuario")) {
+			this.informacionUsuario.setText(text);
+		} else if ( label.equals("informacionCombate") ) {
+			this.informacionCombate.setText(text);
+		}
 	}
 }

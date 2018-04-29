@@ -24,7 +24,7 @@ public class Peon extends Pieza{
 	}
 	
 	public int[][] getMovimientos(){
-		int[][] movimientos = new int[2][2];
+		int[][] movimientos = new int[4][2];
 		int multiplicador;
 		if ( this.color == Color.WHITE ) {
 			multiplicador = -1;
@@ -40,6 +40,11 @@ public class Peon extends Pieza{
 			movimientos[1][0] = -1;
 			movimientos[1][1] = -1;
 		}
+		movimientos[2][0] = this.posicionY + ( 1 * multiplicador );
+		movimientos[2][1] = this.posicionX + 1;
+		
+		movimientos[3][0] = this.posicionY + ( 1 * multiplicador );
+		movimientos[3][1] = this.posicionX - 1;
 		
 		return movimientos;
 	}
