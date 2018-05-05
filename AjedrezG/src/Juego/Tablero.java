@@ -123,9 +123,9 @@ public class Tablero extends JPanel{
 	}
 	
 	public void comprobarMovimientos( Pieza pieza ) {
-		this.casillaEnFoco = casillas[pieza.posicionY][pieza.posicionX];
+		this.casillaEnFoco = casillas[pieza.getFila()][pieza.getColumna()];
 		int[][] movimientos = pieza.getMovimientos();
-		Casilla[] casillasConFoco = new Casilla[movimientos.length];
+		Casilla[] movimientosPosibles = new Casilla[movimientos.length];
 		int movimientoX;
 		int movimientoY;
 		for ( int i = 0 ; i < movimientos.length ; i++ ) {
@@ -135,7 +135,7 @@ public class Tablero extends JPanel{
 				continue;
 			} else {
 				if ( pieza instanceof Peon ) {
-					if ( movimientoX != pieza.posicionX + 1  && movimientoX != pieza.posicionX - 1 ) {
+					if ( movimientoX != pieza.getColumna() + 1  && movimientoX != pieza.getColumna() - 1 ) {
 						if ( casillas[movimientoY][movimientoX].tienePieza() ) {
 							continue;
 						}
@@ -143,8 +143,8 @@ public class Tablero extends JPanel{
 						continue;
 					}
 				}
-				casillasConFoco[i] = casillas[movimientoY][movimientoX];
-				casillas[movimientoY][movimientoX].focus(pieza, casillasConFoco);
+				movimientosPosibles[i] = casillas[movimientoY][movimientoX];
+				casillas[movimientoY][movimientoX].focus(pieza, movimientosPosibles);
 			}
 		}
 		

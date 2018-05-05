@@ -8,16 +8,16 @@ import java.awt.event.*;
 public class Casilla extends JPanel{
 	private final int DEFAULT_WIDTH = 100;
 	private final int DEFAULT_HEIGHT = 100;
-	private int posicionX;
-	private int posicionY;
+	private int columna;
+	private int fila;
 	private Pieza pieza;
 	private Color color;
 	private MouseAdapter mousead;
 	
-	public Casilla(Color color, int y, int x) {
+	public Casilla(Color color, int fila, int columna) {
 		super();
-		this.posicionX = x;
-		this.posicionY = y;
+		this.fila = fila;
+		this.columna = columna;
 		this.color = color;
 		this.setBackground(color);
 		this.setPreferredSize(new Dimension(DEFAULT_WIDTH,DEFAULT_HEIGHT));
@@ -49,7 +49,7 @@ public class Casilla extends JPanel{
 				if ( piezaEnFoco == null ) {
 					System.out.print("eh?");
 				} else {
-					piezaEnFoco.setPosicion(getPosicionX(), getPosicionY());
+					piezaEnFoco.setPosicion(getFila(), getColumna());
 					piezaDestruida = ponerPieza(piezaEnFoco);
 				}
 				casillaEnFoco.repaint();
@@ -100,16 +100,16 @@ public class Casilla extends JPanel{
 		}
 	}
 	
-	public int getPosicionX() {
-		return this.posicionX;
+	public int getColumna() {
+		return this.columna;
 	}
 	
-	public int getPosicionY() {
-		return this.posicionY;
+	public int getFila() {
+		return this.fila;
 	}
 	
 	public String toString() {
-		String frase = "Casilla " + getPosicionY() + ":" + getPosicionX();
+		String frase = "Casilla " + getFila() + ":" + getColumna();
 		return frase;
 	}
 	

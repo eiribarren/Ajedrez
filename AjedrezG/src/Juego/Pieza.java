@@ -5,8 +5,8 @@ import javax.swing.JLabel;
 
 public abstract class Pieza extends JLabel{
 	protected String identificador;
-	protected int posicionX;
-	protected int posicionY;
+	protected int columna;
+	protected int fila;
 	protected String urlImagen;
 	protected Color color;
 	
@@ -16,17 +16,17 @@ public abstract class Pieza extends JLabel{
 		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 	
-	public int getPosicionX() {
-		return this.posicionX;
+	public int getColumna() {
+		return this.columna;
 	}
 	
-	public int getPosicionY() {
-		return this.posicionY;
+	public int getFila() {
+		return this.fila;
 	}
 	
-	public void setPosicion( int posicionX, int posicionY) {
-		this.posicionX = posicionX;
-		this.posicionY = posicionY;
+	public void setPosicion( int fila, int columna) {
+		this.columna = columna;
+		this.fila = fila;
 	}
 	
 	public Color getColor() {

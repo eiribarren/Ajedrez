@@ -3,14 +3,14 @@ import java.awt.Dimension;
 import java.awt.Color;
 
 public class Peon extends Pieza{
-	private int posicionXInicial;
-	private int posicionYInicial;
-	public Peon(Color color, int posicionY, int posicionX) {
+	private int columnaInicial;
+	private int filaInicial;
+	public Peon(Color color, int fila, int columna) {
 		this.identificador = "Peon";
-		this.posicionY = posicionY;
-		this.posicionX = posicionX;
-		this.posicionXInicial = posicionX;
-		this.posicionYInicial = posicionY;
+		this.columna = columna;
+		this.fila = fila;
+		this.columnaInicial = columna;
+		this.filaInicial = fila;
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
@@ -31,20 +31,20 @@ public class Peon extends Pieza{
 		} else {
 			multiplicador = 1;
 		}
-		movimientos[0][0] = this.posicionY + (1 * multiplicador);
-		movimientos[0][1] = this.posicionX;
-		if ( this.posicionX == this.posicionXInicial && this.posicionY == this.posicionYInicial) {
-			movimientos[1][0] = this.posicionY + (2 * multiplicador);
-			movimientos[1][1] = this.posicionX;
+		movimientos[0][0] = this.fila + (1 * multiplicador);
+		movimientos[0][1] = this.columna;
+		if ( this.columna == this.columnaInicial && this.fila == this.filaInicial) {
+			movimientos[1][0] = this.fila + (2 * multiplicador);
+			movimientos[1][1] = this.columna;
 		} else {
 			movimientos[1][0] = -1;
 			movimientos[1][1] = -1;
 		}
-		movimientos[2][0] = this.posicionY + ( 1 * multiplicador );
-		movimientos[2][1] = this.posicionX + 1;
+		movimientos[2][0] = this.fila + ( 1 * multiplicador );
+		movimientos[2][1] = this.columna + 1;
 		
-		movimientos[3][0] = this.posicionY + ( 1 * multiplicador );
-		movimientos[3][1] = this.posicionX - 1;
+		movimientos[3][0] = this.fila + ( 1 * multiplicador );
+		movimientos[3][1] = this.columna - 1;
 		
 		return movimientos;
 	}
