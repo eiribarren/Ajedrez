@@ -3,7 +3,11 @@ import java.awt.Dimension;
 import java.awt.Color;
 
 public class Caballo extends Pieza{
-	public Caballo(Color color) {
+	public Caballo(Color color, int fila, int columna) {
+		this.identificador = "Caballo";
+		this.columna = columna;
+		this.fila = fila;
+		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
 			this.urlImagen = "/Juego/CaballoNegro.png";
@@ -12,6 +16,7 @@ public class Caballo extends Pieza{
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
 		this.setPreferredSize(new Dimension(100,100));
+		start();
 	}
 	//Columna=X Fila=Y
 	public int[][] getMovimientos(){
