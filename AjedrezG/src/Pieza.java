@@ -1,4 +1,4 @@
-package Juego;
+
 import java.awt.Cursor;
 import java.awt.Color;
 import javax.swing.JLabel;

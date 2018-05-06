@@ -1,4 +1,4 @@
-package Juego;
+
 import java.awt.Dimension;
 import java.awt.Color;
 
@@ -14,9 +14,9 @@ public class Peon extends Pieza{
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
-			this.urlImagen = "/Juego/PeonNegro.png";
+			this.urlImagen = "/PeonNegro.png";
 		} else {
-			this.urlImagen = "/Juego/PeonBlanc.png";
+			this.urlImagen = "/PeonBlanc.png";
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
 		this.setPreferredSize(new Dimension(100,100));

@@ -1,4 +1,4 @@
-package Juego;
+
 import java.awt.Dimension;
 import java.awt.Color;
 
@@ -10,9 +10,9 @@ public class Alfil extends Pieza{
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
-			this.urlImagen = "/Juego/AlfilNegro.png";
+			this.urlImagen = "/AlfilNegro.png";
 		} else {
-			this.urlImagen = "/Juego/AlfilBlanco.png";
+			this.urlImagen = "/AlfilBlanco.png";
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
 		this.setPreferredSize(new Dimension(100,100));

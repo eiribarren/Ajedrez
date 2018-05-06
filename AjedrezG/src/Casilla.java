@@ -1,4 +1,4 @@
-package Juego;
+
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import java.awt.Color;

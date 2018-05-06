@@ -1,4 +1,4 @@
-package Juego;
+
 import java.awt.Color;
 
 public class Jugador {

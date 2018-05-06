@@ -1,4 +1,4 @@
-package Juego;
+
 import java.awt.Dimension;
 import java.awt.Color;
 
@@ -10,9 +10,9 @@ public class Caballo extends Pieza{
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
-			this.urlImagen = "/Juego/CaballoNegro.png";
+			this.urlImagen = "/CaballoNegro.png";
 		} else {
-			this.urlImagen = "/Juego/CaballoBlanco.png";
+			this.urlImagen = "/CaballoBlanco.png";
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
 		this.setPreferredSize(new Dimension(100,100));
