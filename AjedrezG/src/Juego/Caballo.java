@@ -36,8 +36,8 @@ public class Caballo extends Pieza{
 			movimientos[4][0]=getFila()-2;//moviment primer fila
 			movimientos[4][1]=getColumna()-1;//moviment primer columna
 			
-			movimientos[5][0]=getFila()+1; //moviment segon fila
-			movimientos[5][1]=getColumna()-2; //moviment segon columna
+			movimientos[5][0]=getFila()-2; //moviment segon fila
+			movimientos[5][1]=getColumna()+1; //moviment segon columna
 			
 			movimientos[6][0]=getFila()-1; //moviment segon fila
 			movimientos[6][1]=getColumna()-2; //moviment segon columna

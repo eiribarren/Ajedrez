@@ -8,6 +8,7 @@ import java.awt.event.*;
 public class Casilla extends JPanel{
 	private final int DEFAULT_WIDTH = 100;
 	private final int DEFAULT_HEIGHT = 100;
+	private static Casilla[] casillasRojas;
 	private int columna;
 	private int fila;
 	private Pieza pieza;
@@ -29,6 +30,13 @@ public class Casilla extends JPanel{
 				Tablero tablero = Partida.getTablero(); 
 				if ( pieza != null ) {
 					if ( tablero.getJugadorActual().getColor() == pieza.getColor()) {
+						if ( Casilla.getCasillasRojas() != null ) {
+							for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
+								if ( casillaRoja != null ) {
+									casillaRoja.unfocus();
+								}
+							}
+						}
 						tablero.comprobarMovimientos( pieza );
 					}
 				}
@@ -36,7 +44,8 @@ public class Casilla extends JPanel{
 		});
 	}
 	
-	public void focus(Pieza pieza, Casilla[] casillasConFoco) {
+	public void focus(Pieza pieza, Casilla[] movimientosPosibles) {
+		Casilla.casillasRojas = movimientosPosibles;
 		this.setBackground(color.RED);
 		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		this.mousead = new MouseAdapter() {
@@ -51,18 +60,19 @@ public class Casilla extends JPanel{
 				} else {
 					piezaEnFoco.setPosicion(getFila(), getColumna());
 					piezaDestruida = ponerPieza(piezaEnFoco);
-				}
-				casillaEnFoco.repaint();
-				tablero.setText("El jugador " + tablero.getJugadorActual() + " ha movido el " + pieza.toString() + " a la " + yoMismo().toString(), "informacionUsuario");
-				if ( piezaDestruida != "" ) {
-					tablero.setText("La pieza " + piezaEnFoco.toString() + " del jugador " + tablero.getJugadorActual().toString() + " ha destruido la pieza " + piezaDestruida + " del rival.", "informacionCombate");
-				} else {
-					tablero.setText("", "informacionCombate");
-				}
-				tablero.setJugadorActual();
-				for ( Casilla casilla : casillasConFoco ) {
-					if ( casilla != null ) {
-						casilla.unfocus();
+				
+					casillaEnFoco.repaint();
+					tablero.setText("El jugador " + tablero.getJugadorActual() + " ha movido el " + pieza.toString() + " a la " + yoMismo().toString(), "informacionUsuario");
+					if ( piezaDestruida != "" ) {
+						tablero.setText("La pieza " + piezaEnFoco.toString() + " del jugador " + tablero.getJugadorActual().toString() + " ha destruido la pieza " + piezaDestruida + " del rival.", "informacionCombate");
+					} else {
+						tablero.setText("", "informacionCombate");
+					}
+					tablero.setJugadorActual();
+					for ( Casilla casilla : movimientosPosibles ) {
+						if ( casilla != null ) {
+							casilla.unfocus();
+						}
 					}
 				}
 			}};
@@ -100,12 +110,20 @@ public class Casilla extends JPanel{
 		}
 	}
 	
+	public Pieza getPieza() {
+		return this.pieza;
+	}
+	
 	public int getColumna() {
 		return this.columna;
 	}
 	
 	public int getFila() {
 		return this.fila;
+	}
+	
+	public static Casilla[] getCasillasRojas() {
+		return casillasRojas;
 	}
 	
 	public String toString() {

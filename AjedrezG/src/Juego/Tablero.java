@@ -79,13 +79,13 @@ public class Tablero extends JPanel{
 					break;
 					
 				case 1:
-					casillas[7][i].ponerPieza( new Caballo(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Caballo(Color.BLACK) );
+					casillas[7][i].ponerPieza( new Caballo(Color.WHITE, 7, i ) );
+					casillas[0][i].ponerPieza( new Caballo(Color.BLACK, 0, i) );
 					break;
 					
 				case 2:
-					casillas[7][i].ponerPieza( new Alfil(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Alfil(Color.BLACK) );
+					casillas[7][i].ponerPieza( new Alfil(Color.WHITE, 7, i) );
+					casillas[0][i].ponerPieza( new Alfil(Color.BLACK, 0, i) );
 					break;
 					
 				case 3:
@@ -99,13 +99,13 @@ public class Tablero extends JPanel{
 					break;
 					
 				case 5:
-					casillas[7][i].ponerPieza( new Alfil(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Alfil(Color.BLACK) );
+					casillas[7][i].ponerPieza( new Alfil(Color.WHITE, 7, i) );
+					casillas[0][i].ponerPieza( new Alfil(Color.BLACK, 0, i) );
 					break;
 					
 				case 6:
-					casillas[7][i].ponerPieza( new Caballo(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Caballo(Color.BLACK) );
+					casillas[7][i].ponerPieza( new Caballo(Color.WHITE, 7, i) );
+					casillas[0][i].ponerPieza( new Caballo(Color.BLACK, 0, i) );
 					break;
 					
 				case 7:
@@ -134,12 +134,17 @@ public class Tablero extends JPanel{
 			if ( movimientoX > 7 || movimientoX < 0 || movimientoY > 7 || movimientoY < 0 ) {
 				continue;
 			} else {
+				if ( casillas[movimientoY][movimientoX].tienePieza()) {
+					if ( pieza.getColor() == casillas[movimientoY][movimientoX].getPieza().getColor() ) {
+						continue;
+					}
+				}
 				if ( pieza instanceof Peon ) {
 					if ( movimientoX != pieza.getColumna() + 1  && movimientoX != pieza.getColumna() - 1 ) {
 						if ( casillas[movimientoY][movimientoX].tienePieza() ) {
 							continue;
 						}
-					} else if ( !casillas[movimientoY][movimientoX].tienePieza() ) {
+					} else if ( !casillas[movimientoY][movimientoX].tienePieza()) {
 						continue;
 					}
 				}
