@@ -34,6 +34,8 @@ public class Tablero extends JPanel{
 		JPanel maestro = new JPanel();
 		JPanel tablero = new JPanel();
 		JPanel interfazUsuario = new JPanel();
+		JPanel texto = new JPanel();
+		BotonRendirse botonRendirse = new BotonRendirse();
 		informacionUsuario = new JLabel();
 		informacionCombate = new JLabel();
 		
@@ -41,10 +43,14 @@ public class Tablero extends JPanel{
 		informacionCombate.setFont(new Font("Arial", Font.PLAIN, 23));
 		
 		maestro.setPreferredSize(new Dimension(1000,1000));
-		interfazUsuario.add(informacionUsuario);
-		interfazUsuario.add(informacionCombate);
 		interfazUsuario.setPreferredSize(new Dimension(900,180));
+		texto.setPreferredSize(new Dimension(900,100));
+		interfazUsuario.add(texto);
+		interfazUsuario.add(botonRendirse);
+		texto.add(informacionUsuario);
+		texto.add(informacionCombate);
 		interfazUsuario.setBackground(Color.WHITE);
+		texto.setBackground(Color.WHITE);
 		interfazUsuario.setVisible(true);
 		tablero.setVisible(true);
 		tablero.setLayout(new GridLayout(8,8));
@@ -94,8 +100,8 @@ public class Tablero extends JPanel{
 					break;
 					
 				case 4:
-					casillas[7][i].ponerPieza( new Rey(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Rey(Color.BLACK) );
+					casillas[7][i].ponerPieza( new Rey(Color.WHITE,7,i) );
+					casillas[0][i].ponerPieza( new Rey(Color.BLACK,0,i) );
 					break;
 					
 				case 5:

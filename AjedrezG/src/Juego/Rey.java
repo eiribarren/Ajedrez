@@ -16,6 +16,7 @@ public class Rey extends Pieza{
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
 		this.setPreferredSize(new Dimension(100,100));
+		start();
 	}
 	public int[][] getMovimientos(){
 		int[][] movimientos = new int[8][2];
