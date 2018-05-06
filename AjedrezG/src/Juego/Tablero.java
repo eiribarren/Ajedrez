@@ -131,9 +131,106 @@ public class Tablero extends JPanel{
 		for ( int i = 0 ; i < movimientos.length ; i++ ) {
 			movimientoY = movimientos[i][0];
 			movimientoX = movimientos[i][1];
+			boolean bloqueado = false;
 			if ( movimientoX > 7 || movimientoX < 0 || movimientoY > 7 || movimientoY < 0 ) {
 				continue;
 			} else {
+				if ( !(pieza instanceof Caballo ) && !(pieza instanceof Peon )) {
+					
+					// Diagonal \
+					if ( pieza.getFila() < movimientoY && pieza.getColumna() < movimientoX ) {
+						for ( int j = 1 ; j < movimientoY - pieza.getFila() ; j++ ) {
+							if ( pieza.getFila() + j > 7 || pieza.getColumna() + j > 7 ) {
+								continue;
+							}
+							if ( casillas[pieza.getFila() + j][pieza.getColumna() + j].tienePieza() ) {
+								bloqueado = true;
+								break;
+							}
+						}
+					} else if ( pieza.getFila() > movimientoY && pieza.getColumna() > movimientoX ) {
+						for ( int j = 1 ; j < pieza.getFila() - movimientoY ; j++ ) {
+							if ( pieza.getFila() - j < 0 || pieza.getColumna() - j < 0) {
+								continue;
+							}
+							if ( casillas[pieza.getFila() - j][pieza.getColumna() - j].tienePieza() ) {
+								bloqueado = true;
+								break;
+							}
+						}
+					//Diagonal /
+					} else if ( pieza.getFila() < movimientoY && pieza.getColumna() > movimientoX ) {
+						for ( int j = 1 ; j < movimientoY - pieza.getFila() ; j++ ) {
+							//7:2 4:5
+							if ( pieza.getFila() + j > 7 || pieza.getColumna() - j < 0 ) {
+								continue;
+							}
+							if ( casillas[pieza.getFila() + j][pieza.getColumna() - j].tienePieza() ) {
+								bloqueado = true;
+								break;
+							}
+						}						
+					} else if ( pieza.getFila() > movimientoY && pieza.getColumna() < movimientoX ) {
+						for ( int j = 1 ; j < pieza.getFila() - movimientoY ; j++ ) {
+							if ( pieza.getFila() - j < 0 || pieza.getColumna() + j > 7 ) {
+								continue;
+							}
+							if ( casillas[pieza.getFila() - j][pieza.getColumna() + j].tienePieza() ) {
+								bloqueado = true;
+								break;
+							}
+						}
+					//Movimiento horizontal ---
+					} else if ( pieza.getFila() == movimientoY ) {
+						if ( pieza.getColumna() < movimientoX) {
+							for ( int j = movimientoX - 1 ; j > pieza.getColumna() ; j--) {
+								if ( j > 7 || j < 0 ) {
+									continue;
+								}
+								if ( casillas[movimientoY][j].tienePieza() ) {
+									bloqueado = true;
+									break;
+								}								
+							}
+						} else {
+							for ( int j = movimientoX + 1; j < pieza.getColumna() ; j++) {
+								if ( j > 7 || j < 0 ) {
+									continue;
+								}
+								if ( casillas[movimientoY][j].tienePieza() ) {
+									bloqueado = true;
+									break;
+								}								
+							}
+						}
+					//Movimiento vertical |
+					} else if ( pieza.getColumna() == movimientoX) {
+						if ( pieza.getFila() < movimientoY) {
+							for ( int j = movimientoY + 1 ; j > pieza.getFila() ; j--) {
+								if ( j > 7 || j < 0 ) {
+									continue;
+								}
+								if ( casillas[j][movimientoX].tienePieza() ) {
+									bloqueado = true;
+									break;
+								}								
+							}
+						} else {
+							for ( int j = movimientoY - 1 ; j > pieza.getFila() ; j++) {
+								if ( j > 7 || j < 0 ) {
+									continue;
+								}
+								if ( casillas[j][movimientoX].tienePieza() ) {
+									bloqueado = true;
+									break;
+								}								
+							}
+						}
+					}
+					if ( bloqueado ) {
+						continue;
+					}
+				}
 				if ( casillas[movimientoY][movimientoX].tienePieza()) {
 					if ( pieza.getColor() == casillas[movimientoY][movimientoX].getPieza().getColor() ) {
 						continue;
