@@ -11,18 +11,11 @@ public class Tablero extends JPanel{
 	private final int COLUMNAS = 8;
 	private final int FILAS = 8;
 	private Casilla[][] casillas = new Casilla[FILAS][COLUMNAS];
-	private int turno = 0;
-	private Jugador primerJugador;
-	private Jugador segundoJugador;
-	private Jugador jugadorActual;
 	private Casilla casillaEnFoco;
 	private JLabel informacionUsuario;
 	private JLabel informacionCombate;
 	
-	public Tablero(Jugador primerJugador, Jugador segundoJugador) {
-		this.primerJugador = primerJugador;
-		this.segundoJugador = segundoJugador;
-		this.jugadorActual = primerJugador;
+	public Tablero() {
 		start();		
 	}
 	
@@ -84,140 +77,23 @@ public class Tablero extends JPanel{
 		add(maestro);
 	}
 	
-	public void comprobarMovimientos( Pieza pieza ) {
-		this.casillaEnFoco = casillas[pieza.getFila()][pieza.getColumna()];
-		int[][] movimientos = pieza.getMovimientos();
-		Casilla[] movimientosPosibles = new Casilla[movimientos.length];
-		int movimientoX;
-		int movimientoY;
-		for ( int i = 0 ; i < movimientos.length ; i++ ) {
-			movimientoY = movimientos[i][0];
-			movimientoX = movimientos[i][1];
-			boolean bloqueado = false;
-			if ( movimientoX > 7 || movimientoX < 0 || movimientoY > 7 || movimientoY < 0 ) {
-				continue;
-			} else {
-				if ( !(pieza instanceof Caballo ) && !(pieza instanceof Peon ) ) {
-					
-					// Diagonal \
-					if ( pieza.getFila() < movimientoY && pieza.getColumna() < movimientoX ) {
-						for ( int j = 1 ; j < movimientoY - pieza.getFila() ; j++ ) {
-							if ( pieza.getFila() + j > 7 || pieza.getColumna() + j > 7 ) {
-								continue;
-							}
-							if ( casillas[pieza.getFila() + j][pieza.getColumna() + j].tienePieza() ) {
-								bloqueado = true;
-								break;
-							}
-						}
-					} else if ( pieza.getFila() > movimientoY && pieza.getColumna() > movimientoX ) {
-						for ( int j = 1 ; j < pieza.getFila() - movimientoY ; j++ ) {
-							if ( pieza.getFila() - j < 0 || pieza.getColumna() - j < 0) {
-								continue;
-							}
-							if ( casillas[pieza.getFila() - j][pieza.getColumna() - j].tienePieza() ) {
-								bloqueado = true;
-								break;
-							}
-						}
-					//Diagonal /
-					} else if ( pieza.getFila() < movimientoY && pieza.getColumna() > movimientoX ) {
-						for ( int j = 1 ; j < movimientoY - pieza.getFila() ; j++ ) {
-							//7:2 4:5
-							if ( pieza.getFila() + j > 7 || pieza.getColumna() - j < 0 ) {
-								continue;
-							}
-							if ( casillas[pieza.getFila() + j][pieza.getColumna() - j].tienePieza() ) {
-								bloqueado = true;
-								break;
-							}
-						}						
-					} else if ( pieza.getFila() > movimientoY && pieza.getColumna() < movimientoX ) {
-						for ( int j = 1 ; j < pieza.getFila() - movimientoY ; j++ ) {
-							if ( pieza.getFila() - j < 0 || pieza.getColumna() + j > 7 ) {
-								continue;
-							}
-							if ( casillas[pieza.getFila() - j][pieza.getColumna() + j].tienePieza() ) {
-								bloqueado = true;
-								break;
-							}
-						}
-					//Movimiento horizontal ---
-					} else if ( pieza.getFila() == movimientoY ) {
-						if ( pieza.getColumna() < movimientoX) {
-							for ( int j = movimientoX - 1 ; j > pieza.getColumna() ; j--) {
-								if ( j > 7 || j < 0 ) {
-									continue;
-								}
-								if ( casillas[movimientoY][j].tienePieza() ) {
-									bloqueado = true;
-									break;
-								}								
-							}
-						} else {
-							for ( int j = movimientoX + 1; j < pieza.getColumna() ; j++) {
-								if ( j > 7 || j < 0 ) {
-									continue;
-								}
-								if ( casillas[movimientoY][j].tienePieza() ) {
-									bloqueado = true;
-									break;
-								}								
-							}
-						}
-					//Movimiento vertical |
-					} else if ( pieza.getColumna() == movimientoX) {
-						if ( pieza.getFila() < movimientoY) {
-							for ( int j = movimientoY - 1 ; j > pieza.getFila() ; j--) {
-								if ( j > 7 || j < 0 ) {
-									continue;
-								}
-								if ( casillas[j][movimientoX].tienePieza() ) {
-									bloqueado = true;
-									break;
-								}								
-							}
-						} else {
-							for ( int j = movimientoY + 1 ; j < pieza.getFila() ; j++) {
-								if ( j > 7 || j < 0 ) {
-									continue;
-								}
-								if ( casillas[j][movimientoX].tienePieza() ) {
-									bloqueado = true;
-									break;
-								}								
-							}
-						}
-					}
-					if ( bloqueado ) {
-						continue;
-					}
+	public void setCasillaEnFoco(Casilla casilla) {
+		if ( Casilla.getCasillasRojas() != null ) {
+			for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
+				if ( casillaRoja != null ) {
+					casillaRoja.unfocus();
 				}
-				if ( casillas[movimientoY][movimientoX].tienePieza()) {
-					if ( pieza.getColor() == casillas[movimientoY][movimientoX].getPieza().getColor() ) {
-						continue;
-					}
-				}
-				if ( pieza instanceof Peon ) {
-					if ( movimientoX != pieza.getColumna() + 1  && movimientoX != pieza.getColumna() - 1 ) {
-						if ( casillas[movimientoY][movimientoX].tienePieza() ) {
-							continue;
-						}
-					} else if ( !casillas[movimientoY][movimientoX].tienePieza()) {
-						continue;
-					}
-				}
-				movimientosPosibles[i] = casillas[movimientoY][movimientoX];
-				casillas[movimientoY][movimientoX].focus(pieza, movimientosPosibles);
 			}
 		}
-		
+		this.casillaEnFoco = casilla;
 	}
-	
-	
 	
 	public Casilla getCasillaEnFoco() {
 		return this.casillaEnFoco;
+	}
+	
+	public Casilla[][] getCasillas() {
+		return this.casillas;
 	}
 	
 	public void ponerPiezas(Pieza[] piezas) {
@@ -225,19 +101,6 @@ public class Tablero extends JPanel{
 				casillas[pieza.getFila()][pieza.getColumna()].ponerPieza(pieza);
 		}
 		this.repaint();
-	}
-	
-	
-	public void setJugadorActual() {
-		if ( this.jugadorActual == primerJugador ) {
-			this.jugadorActual = segundoJugador;
-		} else {
-			this.jugadorActual = primerJugador;
-		}
-	}
-	
-	public Jugador getJugadorActual() {
-		return jugadorActual;
 	}
 	
 	public void setText(String text, String label) {
