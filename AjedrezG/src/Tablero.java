@@ -97,7 +97,7 @@ public class Tablero extends JPanel{
 			if ( movimientoX > 7 || movimientoX < 0 || movimientoY > 7 || movimientoY < 0 ) {
 				continue;
 			} else {
-				if ( !(pieza instanceof Caballo ) && !(pieza instanceof Peon )) {
+				if ( !(pieza instanceof Caballo ) && !(pieza instanceof Peon ) ) {
 					
 					// Diagonal \
 					if ( pieza.getFila() < movimientoY && pieza.getColumna() < movimientoX ) {
@@ -168,7 +168,7 @@ public class Tablero extends JPanel{
 					//Movimiento vertical |
 					} else if ( pieza.getColumna() == movimientoX) {
 						if ( pieza.getFila() < movimientoY) {
-							for ( int j = movimientoY + 1 ; j > pieza.getFila() ; j--) {
+							for ( int j = movimientoY - 1 ; j > pieza.getFila() ; j--) {
 								if ( j > 7 || j < 0 ) {
 									continue;
 								}
@@ -178,7 +178,7 @@ public class Tablero extends JPanel{
 								}								
 							}
 						} else {
-							for ( int j = movimientoY - 1 ; j > pieza.getFila() ; j++) {
+							for ( int j = movimientoY + 1 ; j < pieza.getFila() ; j++) {
 								if ( j > 7 || j < 0 ) {
 									continue;
 								}
