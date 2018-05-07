@@ -30,31 +30,31 @@ public class Partida {
 		Pieza[] piezas = new Pieza[32];
 		for ( int i = 0 ; i < 8 ; i++ ) {
 				piezas[i] = new Peon(Color.WHITE, 6, i);
-				piezas[i] = new Peon(Color.BLACK, 1, i);
+				piezas[i+8] = new Peon(Color.BLACK, 1, i);
 				if ( i == 0 || i == 7 ) {
-					piezas[i] = new Torre(Color.WHITE, 7, i);
-					piezas[i] = new Torre(Color.BLACK, 0, i);
-				}
-				else if ( i == 2 || i == 5 ) {
-					piezas[i] = new Alfil(Color.WHITE, 7, i);
-					piezas[i] = new Alfil(Color.BLACK, 0, i);
+					piezas[i+23] = new Torre(Color.WHITE, 7, i); //23, 30
+					piezas[i+24] = new Torre(Color.BLACK, 0, i); //24, 31
 				}
 				else if (i == 1 || i == 6 ) {
-					piezas[i] = new Caballo(Color.WHITE, 7, i);
-					piezas[i] = new Caballo(Color.BLACK, 0, i);
+					piezas[i+20] = new Caballo(Color.WHITE, 7, i); //21, 26
+					piezas[i+21] = new Caballo(Color.BLACK, 0, i); //22, 27
+				}
+				else if ( i == 2 || i == 5 ) {
+					piezas[i+23] = new Alfil(Color.WHITE, 7, i); //25, 28 
+					piezas[i+14] = new Alfil(Color.BLACK, 0, i); //16, 19
 				}
 				else if (i == 3) {
-					piezas[i] = new Reina(Color.WHITE, 7, i);
-					piezas[i] = new Reina(Color.BLACK, 0, i);
+					piezas[i+17] = new Reina(Color.WHITE, 7, i); //20
+					piezas[i+15] = new Reina(Color.BLACK, 0, i); //18
 				}
 				else if (i == 4) {
-					piezas[i] = new Rey(Color.WHITE, 7, i);
-					piezas[i] = new Rey(Color.BLACK, 0, i);
+					piezas[i+13] = new Rey(Color.WHITE, 7, i); //17
+					piezas[i+25] = new Rey(Color.BLACK, 0, i); //29
 				}
 		}
-		/*for (Pieza pieza : piezas) {
-			pieza.cambiarTamaño(50, 50);
-		}*/
+		for (Pieza pieza : piezas) {
+			pieza.cambiarTamano(50, 50);
+		}
 		tablero.ponerPiezas(piezas);
 	}
 	

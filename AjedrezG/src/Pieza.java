@@ -39,7 +39,7 @@ public abstract class Pieza extends JLabel{
 	public String toString() {
 		return this.identificador;
 	}
-	public void cambiarTamaño(int ancho, int altura) {
+	public void cambiarTamano(int ancho, int altura) {
 		   Image imagen = new javax.swing.ImageIcon(getClass().getResource(urlImagen)).getImage();
 	        
 	        BufferedImage bi = new BufferedImage(imagen.getWidth(null), imagen.getHeight(null), BufferedImage.TYPE_INT_ARGB);

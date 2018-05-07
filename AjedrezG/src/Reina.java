@@ -9,12 +9,12 @@ public class Reina extends Pieza{
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
-			this.urlImagen = "/Reinanegra.png";
+			this.urlImagen = "/ReinaNegra.png";
 		} else {
-			this.urlImagen = "/Reinablanca.png";
+			this.urlImagen = "/ReinaBlanca.png";
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
-		this.setPreferredSize(new Dimension(100,100));
+		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
 	

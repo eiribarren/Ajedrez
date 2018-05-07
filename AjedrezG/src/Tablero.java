@@ -222,8 +222,9 @@ public class Tablero extends JPanel{
 	
 	public void ponerPiezas(Pieza[] piezas) {
 		for ( Pieza pieza : piezas ) {
-				casillas[pieza.getColumna()][pieza.getFila()].ponerPieza(pieza);
+				casillas[pieza.getFila()][pieza.getColumna()].ponerPieza(pieza);
 		}
+		this.repaint();
 	}
 	
 	
