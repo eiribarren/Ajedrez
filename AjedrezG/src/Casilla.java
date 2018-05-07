@@ -6,8 +6,8 @@ import java.awt.Cursor;
 import java.awt.event.*;
 
 public class Casilla extends JPanel{
-	private final int DEFAULT_WIDTH = 100;
-	private final int DEFAULT_HEIGHT = 100;
+	private final int DEFAULT_WIDTH = 50;
+	private final int DEFAULT_HEIGHT = 50;
 	private static Casilla[] casillasRojas;
 	private int columna;
 	private int fila;

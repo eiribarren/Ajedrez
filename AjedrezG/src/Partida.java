@@ -37,55 +37,55 @@ public class Partida {
 		JLabel error_label = new JLabel();
 		JButton botonJugar = new JButton();
 		
-		menu.setPreferredSize(new Dimension(1000,1000));
+		menu.setPreferredSize(new Dimension(500,500));
 		menu.setVisible(true);
 		
 		interfaz.setLayout(new BoxLayout(interfaz, BoxLayout.PAGE_AXIS));
-		interfaz.setPreferredSize(new Dimension(600,1000));
+		interfaz.setPreferredSize(new Dimension(300,500));
 		interfaz.setAlignmentY(Component.CENTER_ALIGNMENT);
 		interfaz.setVisible(true);
 		
-		nombreJugador_textField.setPreferredSize(new Dimension(400,54));
-		nombreJugador_textField.setFont(new Font("Arial", Font.PLAIN, 50));
-		nombreJugador_textField.setMaximumSize(new Dimension(400,54));
+		nombreJugador_textField.setPreferredSize(new Dimension(200,26));
+		nombreJugador_textField.setFont(new Font("Arial", Font.PLAIN, 25));
+		nombreJugador_textField.setMaximumSize(new Dimension(200,26));
 		nombreJugador_textField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		nombreJugador_textField.setVisible(true);
 
-		nombreJugador2_textField.setPreferredSize(new Dimension(400,54));
-		nombreJugador2_textField.setFont(new Font("Arial", Font.PLAIN, 50));
-		nombreJugador2_textField.setMaximumSize(new Dimension(400,54));
+		nombreJugador2_textField.setPreferredSize(new Dimension(200,26));
+		nombreJugador2_textField.setFont(new Font("Arial", Font.PLAIN, 25));
+		nombreJugador2_textField.setMaximumSize(new Dimension(200,26));
 		nombreJugador2_textField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		nombreJugador2_textField.setVisible(true);
 		
 		botonJugar.setText("Jugar");
 		botonJugar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		botonJugar.setFont(new Font("Arial", Font.PLAIN, 50));
+		botonJugar.setFont(new Font("Arial", Font.PLAIN, 25));
 		botonJugar.setVisible(true);
 		
 		nombreJugador1_label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		nombreJugador1_label.setText("Jugador 1: ");
-		nombreJugador1_label.setFont(new Font("Arial", Font.PLAIN, 50));
+		nombreJugador1_label.setFont(new Font("Arial", Font.PLAIN, 25));
 
 		nombreJugador2_label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		nombreJugador2_label.setText("Jugador 2: ");
-		nombreJugador2_label.setFont(new Font("Arial", Font.PLAIN, 50));
+		nombreJugador2_label.setFont(new Font("Arial", Font.PLAIN, 25));
 		
 		error_label.setAlignmentX(Component.CENTER_ALIGNMENT);
-		error_label.setFont(new Font("Arial", Font.PLAIN, 20));
+		error_label.setFont(new Font("Arial", Font.PLAIN, 10));
 		error_label.setVisible(true);
 		
 		titulo.setText("Ajedrez");
 		titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		titulo.setFont(new Font("Arial", Font.PLAIN, 80));
+		titulo.setFont(new Font("Arial", Font.PLAIN, 40));
 		titulo.setVisible(true);
 		
 		interfaz.add(titulo);
-		interfaz.add(Box.createVerticalStrut(40));
+		interfaz.add(Box.createVerticalStrut(20));
 		interfaz.add(nombreJugador1_label);
 		interfaz.add(nombreJugador_textField);
 		interfaz.add(nombreJugador2_label);
 		interfaz.add(nombreJugador2_textField);
-		interfaz.add(Box.createVerticalStrut(20));
+		interfaz.add(Box.createVerticalStrut(10));
 		interfaz.add(botonJugar);
 		interfaz.add(error_label);
 		botonJugar.addActionListener(new ActionListener() {
@@ -105,12 +105,12 @@ public class Partida {
 						pantallaPrincipal.add(tablero);
 					}
 				} else {
-					error_label.setText("No se ha introducido el nombre de algún jugador");
+					error_label.setText("No se ha introducido el nombre de algï¿½n jugador");
 				}
 			}
 			
 		}); 
-		menu.add(Box.createRigidArea(new Dimension(1000,200)));
+		menu.add(Box.createRigidArea(new Dimension(500,100)));
 		menu.add(interfaz);
 		pantallaPrincipal.add(menu);
 		pantallaPrincipal.pack();

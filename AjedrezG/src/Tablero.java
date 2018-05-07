@@ -43,9 +43,9 @@ public class Tablero extends JPanel{
 		informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 23));
 		informacionCombate.setFont(new Font("Arial", Font.PLAIN, 23));
 		
-		maestro.setPreferredSize(new Dimension(1000,1000));
-		interfazUsuario.setPreferredSize(new Dimension(900,180));
-		texto.setPreferredSize(new Dimension(900,100));
+		maestro.setPreferredSize(new Dimension(500,500));
+		interfazUsuario.setPreferredSize(new Dimension(450,90));
+		texto.setPreferredSize(new Dimension(450,50));
 		interfazUsuario.add(texto);
 		interfazUsuario.add(botonRendirse);
 		texto.add(informacionUsuario);

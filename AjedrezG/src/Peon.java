@@ -19,7 +19,7 @@ public class Peon extends Pieza{
 			this.urlImagen = "/PeonBlanc.png";
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
-		this.setPreferredSize(new Dimension(100,100));
+		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
 	

@@ -11,7 +11,7 @@ public class Reina extends Pieza{
 			this.urlImagen = "/ReinaBlanca.png";
 		}
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
-		this.setPreferredSize(new Dimension(100,100));
+		this.setPreferredSize(new Dimension(50,50));
 	}
 	public int[][] getMovimientos(){
 		int[][] movimientos = new int[2][2];
