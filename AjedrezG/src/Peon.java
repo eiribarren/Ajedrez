@@ -6,11 +6,9 @@ public class Peon extends Pieza{
 	private int columnaInicial;
 	private int filaInicial;
 	public Peon(Color color, int fila, int columna) {
-		this.identificador = "Peon";
 		this.columna = columna;
 		this.fila = fila;
-		this.columnaInicial = columna;
-		this.filaInicial = fila;
+		this.identificador = "Peon";
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {

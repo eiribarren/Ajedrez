@@ -23,6 +23,39 @@ public class Partida {
 	public static void main(String[] args) {
 	   prepararInterfazMenu();
 	   pantallaPrincipal.setVisible(true);
+	   
+	}
+	
+	public static void prepararTablero(Tablero tablero) {
+		Pieza[] piezas = new Pieza[32];
+		for ( int i = 0 ; i < 8 ; i++ ) {
+				piezas[i] = new Peon(Color.WHITE, 6, i);
+				piezas[i] = new Peon(Color.BLACK, 1, i);
+				if ( i == 0 || i == 7 ) {
+					piezas[i] = new Torre(Color.WHITE, 7, i);
+					piezas[i] = new Torre(Color.BLACK, 0, i);
+				}
+				else if ( i == 2 || i == 5 ) {
+					piezas[i] = new Alfil(Color.WHITE, 7, i);
+					piezas[i] = new Alfil(Color.BLACK, 0, i);
+				}
+				else if (i == 1 || i == 6 ) {
+					piezas[i] = new Caballo(Color.WHITE, 7, i);
+					piezas[i] = new Caballo(Color.BLACK, 0, i);
+				}
+				else if (i == 3) {
+					piezas[i] = new Reina(Color.WHITE, 7, i);
+					piezas[i] = new Reina(Color.BLACK, 0, i);
+				}
+				else if (i == 4) {
+					piezas[i] = new Rey(Color.WHITE, 7, i);
+					piezas[i] = new Rey(Color.BLACK, 0, i);
+				}
+		}
+		/*for (Pieza pieza : piezas) {
+			pieza.cambiarTamaño(50, 50);
+		}*/
+		tablero.ponerPiezas(piezas);
 	}
 	
 	public static void prepararInterfazMenu() {
@@ -102,6 +135,7 @@ public class Partida {
 						menu.setVisible(false);
 						pantallaPrincipal.remove(menu);
 						tablero = new Tablero(primerJugador, segundoJugador);
+						prepararTablero(tablero);
 						pantallaPrincipal.add(tablero);
 					}
 				} else {

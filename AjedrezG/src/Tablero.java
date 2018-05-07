@@ -78,52 +78,7 @@ public class Tablero extends JPanel{
 			}
 		}
 		
-		for ( int i = 0 ; i < COLUMNAS ; i++ ) {
-			switch(i) {
-				case 0:
-					casillas[7][i].ponerPieza( new Torre(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Torre(Color.BLACK) );
-					break;
-					
-				case 1:
-					casillas[7][i].ponerPieza( new Caballo(Color.WHITE, 7, i ) );
-					casillas[0][i].ponerPieza( new Caballo(Color.BLACK, 0, i) );
-					break;
-					
-				case 2:
-					casillas[7][i].ponerPieza( new Alfil(Color.WHITE, 7, i) );
-					casillas[0][i].ponerPieza( new Alfil(Color.BLACK, 0, i) );
-					break;
-					
-				case 3:
-					casillas[7][i].ponerPieza( new Reina(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Reina(Color.BLACK) );
-					break;
-					
-				case 4:
-					casillas[7][i].ponerPieza( new Rey(Color.WHITE,7,i) );
-					casillas[0][i].ponerPieza( new Rey(Color.BLACK,0,i) );
-					break;
-					
-				case 5:
-					casillas[7][i].ponerPieza( new Alfil(Color.WHITE, 7, i) );
-					casillas[0][i].ponerPieza( new Alfil(Color.BLACK, 0, i) );
-					break;
-					
-				case 6:
-					casillas[7][i].ponerPieza( new Caballo(Color.WHITE, 7, i) );
-					casillas[0][i].ponerPieza( new Caballo(Color.BLACK, 0, i) );
-					break;
-					
-				case 7:
-					casillas[7][i].ponerPieza( new Torre(Color.WHITE) );
-					casillas[0][i].ponerPieza( new Torre(Color.BLACK) );
-					break;
-			}
-			casillas[1][i].ponerPieza(new Peon(Color.BLACK, 1, i ) );
-			casillas[6][i].ponerPieza(new Peon(Color.WHITE, 6, i ));
-			
-		}
+		
 		maestro.add(tablero);
 		maestro.add(interfazUsuario);
 		add(maestro);
@@ -259,9 +214,18 @@ public class Tablero extends JPanel{
 		
 	}
 	
+	
+	
 	public Casilla getCasillaEnFoco() {
 		return this.casillaEnFoco;
 	}
+	
+	public void ponerPiezas(Pieza[] piezas) {
+		for ( Pieza pieza : piezas ) {
+				casillas[pieza.getColumna()][pieza.getFila()].ponerPieza(pieza);
+		}
+	}
+	
 	
 	public void setJugadorActual() {
 		if ( this.jugadorActual == primerJugador ) {

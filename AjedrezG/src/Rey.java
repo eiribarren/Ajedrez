@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class Rey extends Pieza{
 	public Rey(Color color, int fila, int columna) {
-		this.identificador = "Rey";
 		this.columna = columna;
 		this.fila = fila;
+		this.identificador = "Rey";
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {

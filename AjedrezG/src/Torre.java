@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class Torre extends Pieza{
 	public Torre(Color color, int fila, int columna) {
-		this.identificador = "Torre";
 		this.columna = columna;
 		this.fila = fila;
+		this.identificador = "Torre";
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {

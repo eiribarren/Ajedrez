@@ -3,9 +3,9 @@ import java.awt.Color;
 
 public class Reina extends Pieza{
 	public Reina(Color color, int fila, int columna) {
-		this.identificador = "Reina";
 		this.columna = columna;
 		this.fila = fila;
+		this.identificador = "Reina";
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {

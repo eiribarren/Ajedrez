@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class Caballo extends Pieza{
 	public Caballo(Color color, int fila, int columna) {
-		this.identificador = "Caballo";
 		this.columna = columna;
 		this.fila = fila;
+		this.identificador = "Caballo";
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {

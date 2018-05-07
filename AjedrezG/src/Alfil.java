@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class Alfil extends Pieza{
 	public Alfil(Color color, int fila, int columna) {
-		this.identificador = "Alfil";
 		this.columna = columna;
 		this.fila = fila;
+		this.identificador = "Alfil";
 		this.color = color;
 		this.setVisible(true);
 		if ( color == Color.BLACK ) {
