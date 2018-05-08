@@ -145,10 +145,36 @@ public class Partida {
 								casilla.addMouseListener(new MouseAdapter() {
 									
 									public void mouseClicked(MouseEvent e) {
-										Pieza pieza = casilla.getPieza();
-										if ( pieza != null ) {
-											if ( jugadorActual.getColor() == pieza.getColor()) {
-												comprobarMovimientos(pieza, tablero.getCasillas());
+										if ( !casilla.isRojo() ) {
+											Pieza pieza = casilla.getPieza();
+											if ( pieza != null ) {								
+												if ( jugadorActual.getColor() == pieza.getColor()) {
+													comprobarMovimientos(pieza, tablero.getCasillas());
+												}
+											}
+										} else {
+											Casilla casillaEnFoco = tablero.getCasillaEnFoco();
+											Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
+											String piezaDestruida = "";
+											if ( piezaEnFoco == null ) {
+												System.out.print("eh?");
+											} else {
+												piezaEnFoco.setPosicion(casilla.getFila(), casilla.getColumna());
+												piezaDestruida = casilla.ponerPieza(piezaEnFoco);
+											
+												casillaEnFoco.repaint();
+												tablero.setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
+												if ( piezaDestruida != "" ) {
+													tablero.setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
+												} else {
+													tablero.setText("", "informacionCombate");
+												}
+												cambiarJugadorActual();
+												for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
+													if ( casillaRoja != null ) {
+														casillaRoja.unfocus();
+													}
+												}
 											}
 										}
 									}
@@ -295,36 +321,6 @@ public class Partida {
 				Casilla casilla = casillas[movimientoY][movimientoX];
 				movimientosPosibles[i] = casilla;
 				casilla.focus(pieza, movimientosPosibles);
-				mousead = new MouseAdapter() {
-					
-					public void mouseClicked(MouseEvent e) {
-						Casilla casillaEnFoco = tablero.getCasillaEnFoco();
-						Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
-						String piezaDestruida = "";
-						if ( piezaEnFoco == null ) {
-							System.out.print("eh?");
-						} else {
-							piezaEnFoco.setPosicion(casilla.getFila(), casilla.getColumna());
-							piezaDestruida = casilla.ponerPieza(piezaEnFoco);
-						
-							casillaEnFoco.repaint();
-							tablero.setText("El jugador " + jugadorActual.toString() + " ha movido el " + pieza.toString() + " a la " + casilla.toString(), "informacionUsuario");
-							if ( piezaDestruida != "" ) {
-								tablero.setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
-							} else {
-								tablero.setText("", "informacionCombate");
-							}
-							cambiarJugadorActual();
-							for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
-								if ( casillaRoja != null ) {
-									casillaRoja.unfocus();
-									casillaRoja.removeMouseListener(mousead);
-								}
-							}
-						}
-					}
-				};
-				casilla.addMouseListener(mousead);
 			}
 		}
 	}

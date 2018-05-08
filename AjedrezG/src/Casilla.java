@@ -13,6 +13,7 @@ public class Casilla extends JPanel{
 	private int fila;
 	private Pieza pieza;
 	private Color color;
+	private boolean rojo = false;
 	
 	public Casilla(Color color, int fila, int columna) {
 		super();
@@ -27,11 +28,17 @@ public class Casilla extends JPanel{
 	
 	public void focus(Pieza pieza, Casilla[] movimientosPosibles) {
 		Casilla.casillasRojas = movimientosPosibles;
+		for ( Casilla casillaRoja : Casilla.casillasRojas ) {
+			if ( casillaRoja != null ) {
+				casillaRoja.setRojo(true);
+			}
+		}
 		this.setBackground(color.RED);
 		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
 	public void unfocus() {
+		this.setRojo(false);
 		this.setBackground(color);
 		this.setCursor(Cursor.getDefaultCursor());
 		this.repaint();
@@ -76,6 +83,14 @@ public class Casilla extends JPanel{
 	
 	public static Casilla[] getCasillasRojas() {
 		return casillasRojas;
+	}
+	
+	public void setRojo(boolean rojo) {
+		this.rojo = rojo;
+	}
+	
+	public boolean isRojo() {
+		return this.rojo;
 	}
 	
 	public String toString() {
