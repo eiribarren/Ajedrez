@@ -44,15 +44,15 @@ public class Casilla extends JPanel{
 		this.repaint();
 	}
 	
-	public String ponerPieza( Pieza pieza ) {
-		String nombrePiezaDestruida = "";
+	public Pieza ponerPieza( Pieza pieza ) {
+		Pieza piezaDestruida = null;
 		if ( this.tienePieza() ) {
-			nombrePiezaDestruida = this.pieza.toString();
+			piezaDestruida = this.pieza;
 			this.remove(this.pieza);
 		}
 		this.pieza = pieza;
 		this.add(pieza);
-		return nombrePiezaDestruida;
+		return piezaDestruida;
 	}
 	
 	public Pieza quitarPieza() {

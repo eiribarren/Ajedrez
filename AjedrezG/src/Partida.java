@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -158,7 +159,7 @@ public class Partida {
 										} else {
 											Casilla casillaEnFoco = tablero.getCasillaEnFoco();
 											Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
-											String piezaDestruida = "";
+											Pieza piezaDestruida = null;
 											if ( piezaEnFoco == null ) {
 												System.out.print("eh?");
 											} else {
@@ -167,7 +168,10 @@ public class Partida {
 											
 												casillaEnFoco.repaint();
 												setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
-												if ( piezaDestruida != "" ) {
+												if ( piezaDestruida instanceof Rey ) {
+													setText("El jugador " + jugadorActual.toString() + " ha ganado", "informacionUsuario");
+													acabarPartida();
+												} else if ( piezaDestruida != null ) {
 													setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
 												} else {
 													setText("", "informacionCombate");
@@ -346,6 +350,16 @@ public class Partida {
 				Casilla casilla = casillas[movimientoY][movimientoX];
 				movimientosPosibles[i] = casilla;
 				casilla.focus(pieza, movimientosPosibles);
+			}
+		}
+	}
+	
+	public static void acabarPartida() {
+		for ( Casilla[] casillas : tablero.getCasillas() ) {
+			for ( Casilla casilla : casillas ) {
+			    for( MouseListener al : casilla.getMouseListeners() ) {
+			        casilla.removeMouseListener(al);
+			    }
 			}
 		}
 	}
