@@ -16,7 +16,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * Clase que ejecuta una partida de ajedrez
+ * 
+ * @author Epumer
+ * @author Jan
+ * @author Andrés
+ * @author Eric
+ * 
+ */
 public class Partida {
 	static JFrame pantallaPrincipal = new JFrame();
 	static Jugador primerJugador;
@@ -32,6 +40,12 @@ public class Partida {
 		pantallaPrincipal.setVisible(true);
 	}
 	
+	/**
+	 * Función que prepara un tablero agregandole las piezas, define un array de 32 piezas y luego con un for de 8 
+	 * iteraciones instancía todas las piezas en su posición a base de sumar valores al índice, luego se recorre 
+	 * el array de piezas y se cambia el tamaño de estas y finalmente se agregan al tablero.
+	 * @param tablero el tablero que se quiere preparar
+	 */
 	public static void prepararTablero(Tablero tablero) {
 		Pieza[] piezas = new Pieza[32];
 		for ( int i = 0 ; i < 8 ; i++ ) {
@@ -64,23 +78,45 @@ public class Partida {
 		tablero.ponerPiezas(piezas);
 	}
 	
+	/**
+	 * Función que prepara la interfaz del menu principal, aqui se define el título que se muestra en la aplicación,
+	 * a continuación se crean dos {@link JPanel}: uno para el menu y el otro para la interfaz, también crea cuatro
+	 * {@link JLabel}: uno para el título, dos para los nombres de los jugadores y el último para mostrar errores 
+	 * al usuario, seguidamente crea dos {@link JTextField} para introducir los nombres de los jugadores y finalmente
+	 * un {@link JButton} para comenzar a jugar.
+	 * 
+	 * Se realizan ajustes de tamaños y alineación de la interfaz, y se añaden al {@link JPanel} de la interfaz.
+	 * 
+	 * A continuación se añade un {@link ActionListener} al {@link JButton} de jugar que provoca que al clicar el botón
+	 * compruebe si los valores introducidos como nombres de jugador son correctos, en caso de que no lo sean mostrará
+	 * un error en la {@link JLabel} que creamos para errores y en caso de que todo esté correcto instanciará dos
+	 * objetos de la clase {@link Jugador} para el primer y segundo jugador, y asignara al primer jugador como 
+	 * jugador actual. Luego se ocultará la interfaz del menú y se instanciará el tablero, una vez instanciado añade
+	 * un MouseAdapter a través de la función addMouseListener(MouseListener l) en cada una de las
+	 * casillas del tablero, este {@link MouseAdapter} se disparará en cuanto cliquemos una casilla y si esta casilla
+	 * no esta roja y tiene una pieza, nos mostrará las posiciones donde podremos mover esta cambiando el color de las
+	 * casillas que se encuentren en dichas posiciones, en cambio si clicamos una casilla de color rojo moverá la pieza
+	 * que tenía la casilla previamente seleccionada.
+	 * 
+	 * Finalmente se muestra información de la partida en forma de texto.
+	 */
 	public static void prepararInterfazMenu() {
 		pantallaPrincipal.setTitle("Ajedrez");
 		JPanel menu = new JPanel();
 		JPanel interfaz = new JPanel();
 		JLabel titulo = new JLabel();
-		JTextField nombreJugador_textField = new JTextField();
-		JTextField nombreJugador2_textField = new JTextField();
 		JLabel nombreJugador1_label = new JLabel();
 		JLabel nombreJugador2_label = new JLabel();
 		JLabel error_label = new JLabel();
+		JTextField nombreJugador_textField = new JTextField();
+		JTextField nombreJugador2_textField = new JTextField();
 		JButton botonJugar = new JButton();
 		
-		menu.setPreferredSize(new Dimension(500,500));
+		menu.setPreferredSize(new Dimension(500,600));
 		menu.setVisible(true);
 		
 		interfaz.setLayout(new BoxLayout(interfaz, BoxLayout.PAGE_AXIS));
-		interfaz.setPreferredSize(new Dimension(300,500));
+		interfaz.setPreferredSize(new Dimension(300,600));
 		interfaz.setAlignmentY(Component.CENTER_ALIGNMENT);
 		interfaz.setVisible(true);
 		
@@ -149,11 +185,11 @@ public class Partida {
 								casilla.addMouseListener(new MouseAdapter() {
 									
 									public void mouseClicked(MouseEvent e) {
-										if ( !casilla.isRojo() ) {
+										if ( !casilla.isFocused() ) {
 											Pieza pieza = casilla.getPieza();
 											if ( pieza != null ) {								
 												if ( jugadorActual.getColor() == pieza.getColor()) {
-													comprobarMovimientos(pieza, tablero.getCasillas());
+													Casilla.setCasillasRojas(comprobarMovimientos(pieza, tablero.getCasillas()));
 												}
 											}
 										} else {
@@ -175,6 +211,9 @@ public class Partida {
 												} else {
 													setText("", "informacionCombate");
 												}
+												if (comprobarJaque(comprobarMovimientos(piezaEnFoco, tablero.getCasillas()))) {
+													setText("Jaque!","informacionCombate");
+												};
 												cambiarJugadorActual();
 												for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
 													if ( casillaRoja != null ) {
@@ -194,7 +233,7 @@ public class Partida {
 						informacionUsuario = new JLabel();
 						informacionCombate = new JLabel();
 						
-						interfazUsuario.setPreferredSize(new Dimension(450,90));
+						interfazUsuario.setPreferredSize(new Dimension(450,140));
 						texto.setPreferredSize(new Dimension(450,50));
 						interfazUsuario.add(texto);
 						interfazUsuario.add(botonRendirse);
@@ -204,15 +243,15 @@ public class Partida {
 						texto.setBackground(Color.WHITE);
 						interfazUsuario.setVisible(true);
 						
-						informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 23));
-						informacionCombate.setFont(new Font("Arial", Font.PLAIN, 23));
+						informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
+						informacionCombate.setFont(new Font("Arial", Font.PLAIN, 12));
 						
 						maestro.add(tablero);
 						maestro.add(interfazUsuario);
 						pantallaPrincipal.add(maestro);
 					}
 				} else {
-					error_label.setText("No se ha introducido el nombre de algï¿½n jugador");
+					error_label.setText("No se ha introducido el nombre de algún jugador");
 				}
 			}
 			
@@ -223,7 +262,17 @@ public class Partida {
 		pantallaPrincipal.pack();
 	}
 	
-	public static void comprobarMovimientos( Pieza pieza, Casilla[][] casillas ) {
+	/**
+	 * Función que comprueba los movimientos posibles de las piezas, esto lo hace creando un array de {@link Casilla}
+	 * donde guardará las casillas donde se puede mover a la pieza seleccionada. A continuación recorre la mátriz de
+	 * movimientos que puede hacer la pieza y comprueba si algo impide que se realize alguno, como podria ser que esta
+	 * en los limites del tablero o que una pieza la bloquea. Si el movimiento pasa todas las comprobaciones se
+	 * almacena en un array de {@link Casilla}, el cuál finalmente se retorna.
+	 * @param pieza la pieza  a la que queremos comprobar los movimientos posibles.
+	 * @param casillas los movimientos que puede realizar la pieza.
+	 * @return las casillas donde se puede mover la pieza.
+	 */
+	public static Casilla[] comprobarMovimientos( Pieza pieza, Casilla[][] casillas ) {
 		tablero.setCasillaEnFoco( casillas[pieza.getFila()][pieza.getColumna()] );
 		int[][] movimientos = pieza.getMovimientos();
 		Casilla[] movimientosPosibles = new Casilla[movimientos.length];
@@ -348,11 +397,73 @@ public class Partida {
 				}
 				Casilla casilla = casillas[movimientoY][movimientoX];
 				movimientosPosibles[i] = casilla;
-				casilla.focus(pieza, movimientosPosibles);
 			}
 		}
+		return movimientosPosibles;
 	}
 	
+	/**
+	 * Función que comprueba si el rey se encuentra amenazado y se debe declarar Jaque, esto lo hace recibiendo los
+	 * movimientos posibles de una pieza y comprobando si alguno de estos incluye una casilla donde está el rey rival.
+	 * @param movimientos los movimientos que puede hacer la pieza.
+	 * @return true si es jaque y false si no.
+	 */
+	public static boolean comprobarJaque(Casilla[] movimientos) {
+		for ( Casilla movimiento : movimientos ) {
+			if ( movimiento != null ) {
+				if ( movimiento.getPieza() instanceof Rey ) {
+					if ( comprobarMate((Rey)movimiento.getPieza()) ) {
+						setText("Jaque Mate","informacionCombate");
+						acabarPartida();
+						return false;
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	//TODO: Falta comprobar si alguna ficha del mismo color puede bloquear el ataque o matar al atacante
+	public static boolean comprobarMate(Rey rey) {
+		Casilla[] movimientos = comprobarMovimientos(rey, tablero.getCasillas());
+		Casilla[] movimientosMuerte = new Casilla[movimientos.length];
+		Casilla[] movimientosRival;
+		boolean jaqueMate = true;
+		int contador = 0;
+		Color color = rey.getColor();
+		for ( Casilla[] casillas : tablero.getCasillas() ) {
+			for ( Casilla casilla : casillas ) {
+				if ( casilla.tienePieza() ) {
+					if ( casilla.getPieza().getColor() != color ) {
+						movimientosRival = comprobarMovimientos( casilla.getPieza(), tablero.getCasillas() );
+						for ( Casilla movimientoRival : movimientosRival ) {
+							for ( int i = 0 ; i < movimientos.length ; i++ ) {
+								if ( movimientos[i] == null ) {
+									continue;
+								} else if ( movimientos[i] == movimientoRival ) {
+									movimientosMuerte[contador] = movimientos[i];
+									movimientos[i] = null;
+									contador++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		for ( Casilla movimiento : movimientos ) {
+			if ( movimiento != null ) {
+				jaqueMate = false;
+			}
+		}
+		return jaqueMate;
+	}
+	
+	/**
+	 * Función que acaba la partida quitando todos los MouseListeners que permitían jugar y mostrando un
+	 * mensaje del ganador.
+	 */
 	public static void acabarPartida() {
 		for ( Casilla[] casillas : tablero.getCasillas() ) {
 			for ( Casilla casilla : casillas ) {
@@ -364,6 +475,9 @@ public class Partida {
 		setText("El jugador " + jugadorActual.toString() + " ha ganado", "informacionUsuario");
 	}
 	
+	/**
+	 * Función que cambia el turno de los jugadores
+	 */
 	public static void cambiarJugadorActual() {
 		if ( jugadorActual == primerJugador ) {
 			jugadorActual = segundoJugador;
@@ -372,6 +486,11 @@ public class Partida {
 		}
 	}
 	
+	/**
+	 * Función que cambia el texto de la interfaz
+	 * @param text cadena de texto que se mostrará por la interfaz.
+	 * @param label cadena de texto para identificar en que sitio se mostrará el texto.
+	 */
 	public static void setText(String text, String label) {
 		if ( label.equals("informacionUsuario")) {
 			informacionUsuario.setText(text);
