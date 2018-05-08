@@ -7,7 +7,7 @@ public class BotonRendirse extends JButton {
         this.setText("Rendirse");
         this.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) { 
-                //TODO: PONER METODO QUE FINALIZA LA PARTIDA ACTUAL DE ESTE MISMO INSTANTE INSTANTANEO Y QUE DEFINA QUE EL ETERNO 
+            	Partida.acabarPartida();
             }
         });
 

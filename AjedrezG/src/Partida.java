@@ -169,7 +169,6 @@ public class Partida {
 												casillaEnFoco.repaint();
 												setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
 												if ( piezaDestruida instanceof Rey ) {
-													setText("El jugador " + jugadorActual.toString() + " ha ganado", "informacionUsuario");
 													acabarPartida();
 												} else if ( piezaDestruida != null ) {
 													setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
@@ -362,6 +361,7 @@ public class Partida {
 			    }
 			}
 		}
+		setText("El jugador " + jugadorActual.toString() + " ha ganado", "informacionUsuario");
 	}
 	
 	public static void cambiarJugadorActual() {
