@@ -23,6 +23,8 @@ public class Partida {
 	static Tablero tablero;
 	static Jugador jugadorActual;
 	static MouseAdapter mousead;
+	static JLabel informacionUsuario;
+	static JLabel informacionCombate;
 	
 	public static void main(String[] args) { 
 		prepararInterfazMenu();
@@ -124,6 +126,7 @@ public class Partida {
 		interfaz.add(Box.createVerticalStrut(10));
 		interfaz.add(botonJugar);
 		interfaz.add(error_label);
+		
 		botonJugar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
@@ -163,11 +166,11 @@ public class Partida {
 												piezaDestruida = casilla.ponerPieza(piezaEnFoco);
 											
 												casillaEnFoco.repaint();
-												tablero.setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
+												setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
 												if ( piezaDestruida != "" ) {
-													tablero.setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
+													setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
 												} else {
-													tablero.setText("", "informacionCombate");
+													setText("", "informacionCombate");
 												}
 												cambiarJugadorActual();
 												for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
@@ -181,7 +184,29 @@ public class Partida {
 								});
 							}
 						}
-						pantallaPrincipal.add(tablero);
+						JPanel maestro = new JPanel();
+						JPanel interfazUsuario = new JPanel();
+						JPanel texto = new JPanel();
+						BotonRendirse botonRendirse = new BotonRendirse();
+						informacionUsuario = new JLabel();
+						informacionCombate = new JLabel();
+						
+						interfazUsuario.setPreferredSize(new Dimension(450,90));
+						texto.setPreferredSize(new Dimension(450,50));
+						interfazUsuario.add(texto);
+						interfazUsuario.add(botonRendirse);
+						texto.add(informacionUsuario);
+						texto.add(informacionCombate);
+						interfazUsuario.setBackground(Color.WHITE);
+						texto.setBackground(Color.WHITE);
+						interfazUsuario.setVisible(true);
+						
+						informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 23));
+						informacionCombate.setFont(new Font("Arial", Font.PLAIN, 23));
+						
+						maestro.add(tablero);
+						maestro.add(interfazUsuario);
+						pantallaPrincipal.add(maestro);
 					}
 				} else {
 					error_label.setText("No se ha introducido el nombre de alg�n jugador");
@@ -330,6 +355,14 @@ public class Partida {
 			jugadorActual = segundoJugador;
 		} else {
 			jugadorActual = primerJugador;
+		}
+	}
+	
+	public static void setText(String text, String label) {
+		if ( label.equals("informacionUsuario")) {
+			informacionUsuario.setText(text);
+		} else if ( label.equals("informacionCombate") ) {
+			informacionCombate.setText(text);
 		}
 	}
 }

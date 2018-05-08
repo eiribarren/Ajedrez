@@ -12,8 +12,6 @@ public class Tablero extends JPanel{
 	private final int FILAS = 8;
 	private Casilla[][] casillas = new Casilla[FILAS][COLUMNAS];
 	private Casilla casillaEnFoco;
-	private JLabel informacionUsuario;
-	private JLabel informacionCombate;
 	
 	public Tablero() {
 		start();		
@@ -25,27 +23,7 @@ public class Tablero extends JPanel{
 	}
 	
 	public void prepararInterfaz() {
-		JPanel maestro = new JPanel();
 		JPanel tablero = new JPanel();
-		JPanel interfazUsuario = new JPanel();
-		JPanel texto = new JPanel();
-		BotonRendirse botonRendirse = new BotonRendirse();
-		informacionUsuario = new JLabel();
-		informacionCombate = new JLabel();
-		
-		informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 23));
-		informacionCombate.setFont(new Font("Arial", Font.PLAIN, 23));
-		
-		maestro.setPreferredSize(new Dimension(500,500));
-		interfazUsuario.setPreferredSize(new Dimension(450,90));
-		texto.setPreferredSize(new Dimension(450,50));
-		interfazUsuario.add(texto);
-		interfazUsuario.add(botonRendirse);
-		texto.add(informacionUsuario);
-		texto.add(informacionCombate);
-		interfazUsuario.setBackground(Color.WHITE);
-		texto.setBackground(Color.WHITE);
-		interfazUsuario.setVisible(true);
 		tablero.setVisible(true);
 		tablero.setLayout(new GridLayout(8,8));
 		for ( int i = 0 ; i < FILAS ; i++ ) {
@@ -71,10 +49,7 @@ public class Tablero extends JPanel{
 			}
 		}
 		
-		
-		maestro.add(tablero);
-		maestro.add(interfazUsuario);
-		add(maestro);
+		add(tablero);
 	}
 	
 	public void setCasillaEnFoco(Casilla casilla) {
@@ -103,11 +78,4 @@ public class Tablero extends JPanel{
 		this.repaint();
 	}
 	
-	public void setText(String text, String label) {
-		if ( label.equals("informacionUsuario")) {
-			this.informacionUsuario.setText(text);
-		} else if ( label.equals("informacionCombate") ) {
-			this.informacionCombate.setText(text);
-		}
-	}
 }
