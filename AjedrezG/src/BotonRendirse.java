@@ -7,6 +7,7 @@ public class BotonRendirse extends JButton {
         this.setText("Rendirse");
         this.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) { 
+            	Partida.cambiarJugadorActual();
             	Partida.acabarPartida();
             }
         });
