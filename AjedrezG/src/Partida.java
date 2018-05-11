@@ -20,8 +20,8 @@ import javax.swing.JTextField;
  * Clase que ejecuta una partida de ajedrez
  * 
  * @author Epumer
- * @author Jan
  * @author Andrés
+ * @author Jan
  * @author Eric
  * 
  */

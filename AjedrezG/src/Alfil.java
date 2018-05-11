@@ -1,7 +1,11 @@
 
 import java.awt.Dimension;
 import java.awt.Color;
-
+/**
+ * 
+ * @author Andres
+ *
+ */
 public class Alfil extends Pieza{
 	public Alfil(Color color, int fila, int columna) {
 		this.columna = columna;
@@ -19,24 +23,24 @@ public class Alfil extends Pieza{
 		start();
 	}
 	public int[][] getMovimientos(){
-		int[][] movimientos = new int[28][2];
+		int[][] movimientosAlfil = new int[28][2];
 		for(int i=1;i<8;i++){
-			movimientos[i-1][0]=getFila()+(1*i);//moviment primer fila
-			movimientos[i-1][1]=getColumna()+(1*i);//moviment primer columna
+			movimientosAlfil[i-1][0]=getFila()+(1*i);//moviment primer fila
+			movimientosAlfil[i-1][1]=getColumna()+(1*i);//moviment primer columna
 		}
 		for(int i=1;i<8;i++){
-			movimientos[i+6][0]=getFila()-(1*i);//moviment primer fila
-			movimientos[i+6][1]=getColumna()+(1*i);//moviment primer columna
+			movimientosAlfil[i+6][0]=getFila()-(1*i);//moviment segon fila
+			movimientosAlfil[i+6][1]=getColumna()+(1*i);//moviment segon columna
 		}
 		for(int i=1;i<8;i++){
-			movimientos[i+13][0]=getFila()+(1*i);//moviment primer fila
-			movimientos[i+13][1]=getColumna()-(1*i);//moviment primer columna
+			movimientosAlfil[i+13][0]=getFila()+(1*i);//moviment tercer fila
+			movimientosAlfil[i+13][1]=getColumna()-(1*i);//moviment tercer columna
 		}
 		for(int i=1;i<8;i++){
-			movimientos[i+20][0]=getFila()-(1*i);//moviment primer fila
-			movimientos[i+20][1]=getColumna()-(1*i);//moviment primer columna
+			movimientosAlfil[i+20][0]=getFila()-(1*i);//moviment quart fila
+			movimientosAlfil[i+20][1]=getColumna()-(1*i);//moviment quart columna
 		}
-		return movimientos;
+		return movimientosAlfil;
 	}
 }
 
