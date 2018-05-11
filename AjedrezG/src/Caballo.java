@@ -1,7 +1,11 @@
 
 import java.awt.Dimension;
 import java.awt.Color;
-
+/**
+ * 
+ * @author Andres
+ *
+ */
 public class Caballo extends Pieza{
 	public Caballo(Color color, int fila, int columna) {
 		this.columna = columna;
@@ -20,31 +24,31 @@ public class Caballo extends Pieza{
 	}
 	//Columna=X Fila=Y
 	public int[][] getMovimientos(){
-		int[][] movimientos = new int[8][2];
-			movimientos[0][0]=getFila()+2;//moviment primer fila
-			movimientos[0][1]=getColumna()+1;//moviment primer columna
+		int[][] movimientosCaballo = new int[8][2];
+			movimientosCaballo[0][0]=getFila()+2;//moviment primer fila
+			movimientosCaballo[0][1]=getColumna()+1;//moviment primer columna
 			
-			movimientos[1][0]=getFila()+2; //moviment segon fila
-			movimientos[1][1]=getColumna()-1; //moviment segon columna
+			movimientosCaballo[1][0]=getFila()+2; //moviment segon fila
+			movimientosCaballo[1][1]=getColumna()-1; //moviment segon columna
 			
-			movimientos[2][0]=getFila()+1;//moviment primer fila
-			movimientos[2][1]=getColumna()+2;//moviment primer columna
+			movimientosCaballo[2][0]=getFila()+1;//moviment tercer fila
+			movimientosCaballo[2][1]=getColumna()+2;//moviment tercer columna
 			
-			movimientos[3][0]=getFila()-1; //moviment segon fila
-			movimientos[3][1]=getColumna()+2; //moviment segon columna
+			movimientosCaballo[3][0]=getFila()-1; //moviment quart fila
+			movimientosCaballo[3][1]=getColumna()+2; //moviment quart columna
 			
-			movimientos[4][0]=getFila()-2;//moviment primer fila
-			movimientos[4][1]=getColumna()-1;//moviment primer columna
+			movimientosCaballo[4][0]=getFila()-2;//moviment cinque fila
+			movimientosCaballo[4][1]=getColumna()-1;//moviment cinque columna
 			
-			movimientos[5][0]=getFila()-2; //moviment segon fila
-			movimientos[5][1]=getColumna()+1; //moviment segon columna
+			movimientosCaballo[5][0]=getFila()-2; //moviment sise fila
+			movimientosCaballo[5][1]=getColumna()+1; //moviment sise columna
 			
-			movimientos[6][0]=getFila()-1; //moviment segon fila
-			movimientos[6][1]=getColumna()-2; //moviment segon columna
+			movimientosCaballo[6][0]=getFila()-1; //moviment sete fila
+			movimientosCaballo[6][1]=getColumna()-2; //moviment sete columna
 			
-			movimientos[7][0]=getFila()+1; //moviment segon fila
-			movimientos[7][1]=getColumna()-2; //moviment segon columna
-			return movimientos;
+			movimientosCaballo[7][0]=getFila()+1; //moviment vuite fila
+			movimientosCaballo[7][1]=getColumna()-2; //moviment vuite columna
+			return movimientosCaballo;
 	}
 }
 
