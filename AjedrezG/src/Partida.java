@@ -35,6 +35,8 @@ public class Partida {
 	static JLabel informacionUsuario;
 	static JLabel informacionCombate;
 	static Casilla[] movimientosEnJaque;
+	static Casilla[] movimientosRey;
+	static boolean jaque = false;
 	
 	public static void main(String[] args) { 
 		prepararInterfazMenu();
@@ -198,9 +200,7 @@ public class Partida {
 											Casilla casillaEnFoco = tablero.getCasillaEnFoco();
 											Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
 											Pieza piezaDestruida = null;
-											if ( piezaEnFoco == null ) {
-												System.out.print("eh?");
-											} else {
+											if ( piezaEnFoco != null ) {
 												piezaEnFoco.setPosicion(casilla.getFila(), casilla.getColumna());
 												piezaDestruida = casilla.ponerPieza(piezaEnFoco);
 											
@@ -397,12 +397,22 @@ public class Partida {
 						continue;
 					}
 				}
-				if ( movimientosEnJaque != null ) {
-					for ( Casilla movimientoEnJaque : movimientosEnJaque ) {
-						if ( casillas[movimientoY][movimientoX] == movimientoEnJaque ) {
-							Casilla casilla = casillas[movimientoY][movimientoX];
-							movimientosPosibles[i] = casilla;
-							break;
+				if ( jaque ) {
+					if ( pieza instanceof Rey ) {
+						for ( Casilla movimientoRey : movimientosRey ) {
+							if ( casillas[movimientoY][movimientoX] == movimientoRey) {
+								Casilla casilla = casillas[movimientoY][movimientoX];
+								movimientosPosibles[i] = casilla;
+								break;
+							}
+						}
+					} else {
+						for ( Casilla movimientoEnJaque : movimientosEnJaque ) {
+							if ( casillas[movimientoY][movimientoX] == movimientoEnJaque ) {
+								Casilla casilla = casillas[movimientoY][movimientoX];
+								movimientosPosibles[i] = casilla;
+								break;
+							}
 						}
 					}
 					continue;
@@ -417,110 +427,124 @@ public class Partida {
 	/**
 	 * Funci&oacute;n que comprueba si el rey se encuentra amenazado y se debe declarar Jaque, esto lo hace recibiendo los
 	 * movimientos posibles de una pieza y comprobando si alguno de estos incluye una casilla donde est&aacute; el rey rival.
-	 * @param movimientos los movimientos que puede hacer la pieza.
+	 * @param piezaAtacante la pieza que podria amenazar al rey
 	 * @return true si es jaque y false si no.
 	 */
 	public static boolean comprobarJaque(Pieza piezaAtacante) {
+		Casilla[][] casillas = tablero.getCasillas();
 		Casilla[] movimientos = comprobarMovimientos(piezaAtacante, tablero.getCasillas());
-		int contador = 0;
-		boolean movimientoEncontrado;
-		boolean sePuedeMatar = false;
 		for ( Casilla movimiento : movimientos ) {
-			movimientoEncontrado = false;
 			if ( movimiento != null ) {
 				if ( movimiento.getPieza() instanceof Rey ) {
 					if ( piezaAtacante.getFila() > movimiento.getPieza().getFila() ) {
-						movimientosEnJaque = new Casilla[piezaAtacante.getFila() - movimiento.getPieza().getFila()];
+						int multiplicador = 1;
+						int largo = piezaAtacante.getFila() - movimiento.getPieza().getFila();
+						if ( piezaAtacante.getColumna() > movimiento.getPieza().getColumna() ) {
+							multiplicador = -1;
+						} else if ( piezaAtacante.getColumna() == movimiento.getPieza().getColumna() ) {
+							multiplicador = 0;
+						}
+						movimientosEnJaque = new Casilla[largo];
+						for ( int i = 0 ; i < largo ; i++ ) {
+							movimientosEnJaque[i] = casillas[piezaAtacante.getFila()-i][piezaAtacante.getColumna()+(i*multiplicador)]; 
+						}
 					} else if ( piezaAtacante.getFila() < movimiento.getPieza().getFila() ) {
-						movimientosEnJaque = new Casilla[movimiento.getPieza().getFila() - piezaAtacante.getFila()];
+						int multiplicador = 1;
+						int largo = movimiento.getPieza().getFila() - piezaAtacante.getFila();
+						if ( piezaAtacante.getColumna() > movimiento.getPieza().getColumna() ) {
+							multiplicador = -1;
+						} else if ( piezaAtacante.getColumna() == movimiento.getPieza().getColumna() ) {
+							multiplicador = 0;
+						}
+						movimientosEnJaque = new Casilla[largo];
+						for ( int i = 0 ; i < largo ; i++ ) {
+							movimientosEnJaque[i] = casillas[piezaAtacante.getFila()+i][piezaAtacante.getColumna()+(i*multiplicador)]; 
+						}
 					} else {
 						if ( piezaAtacante.getColumna() > movimiento.getPieza().getFila() ) {
-							movimientosEnJaque = new Casilla[movimiento.getPieza().getColumna() - piezaAtacante.getColumna()];
+							int largo = piezaAtacante.getColumna() - movimiento.getPieza().getColumna();
+							movimientosEnJaque = new Casilla[largo];
+							for ( int i = 0 ; i < largo ; i++ ) {
+								movimientosEnJaque[i] = casillas[piezaAtacante.getFila()][piezaAtacante.getColumna()-i]; 
+							}
 						} else {
-							movimientosEnJaque = new Casilla[movimiento.getPieza().getColumna() - piezaAtacante.getColumna()];
-						}
-					}
-					for ( Casilla[] casillas : tablero.getCasillas() ) {
-						if ( movimientoEncontrado ) {
-							break;
-						}
-						for ( Casilla casilla : casillas ) {
-							if ( movimientoEncontrado ) {
-								break;
-							}
-							if ( casilla.tienePieza() ) {
-								if ( casilla.getPieza().getColor() != piezaAtacante.getColor() ) {
-									Casilla[] movimientosProtectores = comprobarMovimientos(casilla.getPieza(), tablero.getCasillas());
-									for ( Casilla movimientoProtector : movimientosProtectores ) {
-										if ( movimientoProtector == movimiento ) {
-											movimientosEnJaque[contador] = movimientoProtector;
-											contador++;
-											System.out.print(contador);
-											movimientoEncontrado = true;
-											break;
-										} else if ( movimientoProtector == tablero.getCasillas()[piezaAtacante.getFila()][piezaAtacante.getColumna()] && !sePuedeMatar ) {
-											sePuedeMatar = true;
-											contador++;
-											movimientoEncontrado = true;
-											break;
-										}
-									}
-								}
+							int largo = piezaAtacante.getColumna() - movimiento.getPieza().getColumna();
+							movimientosEnJaque = new Casilla[largo];
+							for ( int i = 0 ; i < largo ; i++ ) {
+								movimientosEnJaque[i] = casillas[piezaAtacante.getFila()][piezaAtacante.getColumna()+i]; 
 							}
 						}
 					}
-					if ( comprobarMate((Rey)movimiento.getPieza()) ) {
+					movimientosRey = comprobarMate((Rey)movimiento.getPieza());
+					if ( movimientosRey.length == 0 ) {
 						setText("Jaque Mate","informacionCombate");
 						acabarPartida();
 						return false;
 					}
+					jaque = true;
 					return true;
+				}
+			}
+		}
+		jaque = false;
+		return false;
+	}
+	
+	/**
+	 * Comprueba si hay alg&uacute;n movimiento del rey que no est&eacute; amenazado por el rival.
+	 * @param rey el rey para comprobar sus movimientos,
+	 * @return movimientos que puede hacer el rey de forma segura.
+	 */
+	public static Casilla[] comprobarMate(Rey rey) {
+		Casilla[] movimientos = comprobarMovimientos(rey, tablero.getCasillas());
+		Casilla[] movimientosMuerte = new Casilla[movimientos.length];
+		Casilla[] movimientosRival;
+		int contador = 0;
+		Color color = rey.getColor();
+		for ( Casilla[] casillas : tablero.getCasillas() ) {
+			for ( Casilla casilla : casillas ) {
+				if ( casilla.tienePieza() ) {
+					if ( casilla.getPieza().getColor() != color ) {
+						movimientosRival = comprobarMovimientos( casilla.getPieza(), tablero.getCasillas() );
+						for ( Casilla movimientoRival : movimientosRival ) {
+							for ( int i = 0 ; i < movimientos.length ; i++ ) {
+								if ( movimientos[i] == null ) {
+									continue;
+								} else if ( movimientos[i] == movimientoRival ) {
+									movimientosMuerte[contador] = movimientos[i];
+									movimientos[i] = null;
+									contador++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return movimientos;
+	}
+	
+	/**
+	 * Comprueba si alguna pieza puede posicionarse en las casillas introducidas.
+	 * @param casillas las casillas para comprobar si una pieza puede moverse ah&iacute;.
+	 * @param color el color de la pieza a bloquear.
+	 * @return true si se puede bloquear la pieza y false si no.
+	 */
+	public static boolean comprobarBloqueo( Casilla[] casillas, Color color ) {
+		for ( Casilla casilla : casillas ) {
+			if ( casilla.tienePieza() ) {
+				if ( casilla.getPieza().getColor() != color ) {
+					Casilla[] movimientosProtectores = comprobarMovimientos(casilla.getPieza(), tablero.getCasillas());
+					for ( Casilla movimientoProtector : movimientosProtectores ) {
+						if ( movimientoProtector == casilla ) {
+							return true;
+						}
+					}
 				}
 			}
 		}
 		return false;
 	}
-	
-	//TODO: Falta comprobar si alguna ficha del mismo color puede bloquear el ataque o matar al atacante
-	public static boolean comprobarMate(Rey rey) {
-		Casilla[] movimientos = comprobarMovimientos(rey, tablero.getCasillas());
-		Casilla[] movimientosMuerte = new Casilla[movimientos.length];
-		Casilla[] movimientosRival;
-		boolean jaqueMate = true;
-		int contador = 0;
-		Color color = rey.getColor();
-		if ( movimientosEnJaque.length == 0 ) {
-			for ( Casilla[] casillas : tablero.getCasillas() ) {
-				for ( Casilla casilla : casillas ) {
-					if ( casilla.tienePieza() ) {
-						if ( casilla.getPieza().getColor() != color ) {
-							movimientosRival = comprobarMovimientos( casilla.getPieza(), tablero.getCasillas() );
-							for ( Casilla movimientoRival : movimientosRival ) {
-								for ( int i = 0 ; i < movimientos.length ; i++ ) {
-									if ( movimientos[i] == null ) {
-										continue;
-									} else if ( movimientos[i] == movimientoRival ) {
-										movimientosMuerte[contador] = movimientos[i];
-										movimientos[i] = null;
-										contador++;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			for ( Casilla movimiento : movimientos ) {
-				if ( movimiento != null ) {
-					jaqueMate = false;
-				}
-			}
-		} else {
-			jaqueMate = false;
-		}
-		return jaqueMate;
-	}
-	
 	/**
 	 * Funci&oacute;n que acaba la partida quitando todos los MouseListeners que permit&iacute;an jugar y mostrando un
 	 * mensaje del ganador.
