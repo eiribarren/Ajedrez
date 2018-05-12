@@ -31,12 +31,14 @@ public class Tablero extends JPanel{
 	 * Casilla casillaEnFoco es la casilla seleccionada actualmente.
 	 */
 	private Casilla casillaEnFoco;
+	private int alto;
+	private int ancho;
 	
 	/**
 	 * Constructor del tablero.
 	 */
-	public Tablero() {
-		prepararInterfaz();
+	public Tablero(int ancho, int alto) {
+		prepararInterfaz(ancho, alto);
 		setVisible(true);			
 	}
 	
@@ -46,7 +48,7 @@ public class Tablero extends JPanel{
 	 * instanc�a las casillas y las guarda en la m&aacute;triz casillas, luego a&ntilde;ade las casillas en el {@link JPanel} tablero 
 	 * y finalmente a&ntilde;ade este al propio tablero.
 	 */
-	public void prepararInterfaz() {
+	public void prepararInterfaz(int ancho, int alto) {
 		JPanel tablero = new JPanel();
 		tablero.setVisible(true);
 		tablero.setLayout(new GridLayout(8,8));
@@ -54,15 +56,15 @@ public class Tablero extends JPanel{
 			for ( int j = 0 ; j < COLUMNAS ; j++ ) {
 				if ( i % 2 == 0 ) {
 					if ( j % 2 == 0 ) {
-						casillas[i][j] = new Casilla(Color.GRAY, i, j);
+						casillas[i][j] = new Casilla(Color.GRAY, i, j, ancho/8, alto/8);
 					} else {
-						casillas[i][j] = new Casilla(Color.WHITE, i, j);
+						casillas[i][j] = new Casilla(Color.WHITE, i, j, ancho/8, alto/8);
 					}
 				} else {
 					if ( j % 2 != 0 ) {
-						casillas[i][j] = new Casilla(Color.GRAY, i, j);
+						casillas[i][j] = new Casilla(Color.GRAY, i, j, ancho/8, alto/8);
 					} else {
-						casillas[i][j] = new Casilla(Color.WHITE, i, j);
+						casillas[i][j] = new Casilla(Color.WHITE, i, j, ancho/8, alto/8);
 					}					
 				}
 			}

@@ -10,9 +10,9 @@ import java.awt.event.*;
  *
  */
 public class Casilla extends JPanel{
-	private final int DEFAULT_WIDTH = 50;
-	private final int DEFAULT_HEIGHT = 50;
 	private static Casilla[] casillasRojas;
+	private int ancho;
+	private int alto;
 	private int columna;
 	private int fila;
 	private Pieza pieza;
@@ -25,14 +25,14 @@ public class Casilla extends JPanel{
 	 * @param fila posici&oacute;n vertical de la casilla.
 	 * @param columna posici&oacute;n horizontal de la casilla.
 	 */
-	public Casilla(Color color, int fila, int columna) {
+	public Casilla(Color color, int fila, int columna, int ancho, int alto) {
 		super();
 		this.fila = fila;
 		this.columna = columna;
 		this.color = color;
 		this.setBackground(color);
-		this.setPreferredSize(new Dimension(DEFAULT_WIDTH,DEFAULT_HEIGHT));
-		this.setMaximumSize(new Dimension(DEFAULT_WIDTH,DEFAULT_HEIGHT));
+		this.setPreferredSize(new Dimension(ancho,alto));
+		this.setMaximumSize(new Dimension(ancho,alto));
 		this.setVisible(true);
 	}
 	

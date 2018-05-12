@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
@@ -102,7 +103,13 @@ public abstract class Pieza extends JLabel{
 	        
 	        BufferedImage bi = new BufferedImage(imagen.getWidth(null), imagen.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 	        Graphics2D g = bi.createGraphics();
-	        g.drawImage(imagen,0,altura/2,ancho,altura,null);
+	        if ( altura < 100 ) {
+	        	g.drawImage(imagen,0,altura/2,ancho,altura,null);
+	        } else {
+	        	g.drawImage(imagen,0,0,ancho,altura,null);
+	        }
 	        this.setIcon(new ImageIcon(bi));
+	        this.setPreferredSize(new Dimension(ancho,altura));
+	        this.setMaximumSize(new Dimension(ancho,altura));
 	}
 }

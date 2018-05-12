@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -50,7 +51,7 @@ public class Partida {
 	 * el array de piezas y se cambia el tama&ntilde;o de estas y finalmente se agregan al tablero.
 	 * @param tablero el tablero que se quiere preparar
 	 */
-	public static void prepararTablero(Tablero tablero) {
+	public static void prepararTablero(Tablero tablero, int multiplicador ) {
 		Pieza[] piezas = new Pieza[32];
 		for ( int i = 0 ; i < 8 ; i++ ) {
 				piezas[i] = new Peon(Color.WHITE, 6, i);
@@ -77,7 +78,7 @@ public class Partida {
 				}
 		}
 		for (Pieza pieza : piezas) {
-			pieza.cambiarTamano(50, 50);
+			pieza.cambiarTamano(50 * multiplicador, 50 * multiplicador);
 		}
 		tablero.ponerPiezas(piezas);
 	}
@@ -111,11 +112,12 @@ public class Partida {
 		JLabel titulo = new JLabel();
 		JLabel nombreJugador1_label = new JLabel();
 		JLabel nombreJugador2_label = new JLabel();
+		JLabel resolucion_label = new JLabel();
 		JLabel error_label = new JLabel();
 		JTextField nombreJugador_textField = new JTextField();
 		JTextField nombreJugador2_textField = new JTextField();
 		JButton botonJugar = new JButton();
-		
+		JComboBox resolucion = new JComboBox();
 		menu.setPreferredSize(new Dimension(500,600));
 		menu.setVisible(true);
 		
@@ -149,6 +151,15 @@ public class Partida {
 		nombreJugador2_label.setText("Jugador 2: ");
 		nombreJugador2_label.setFont(new Font("Arial", Font.PLAIN, 25));
 		
+		resolucion_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		resolucion_label.setText("Resolucion: ");
+		resolucion_label.setFont(new Font("Arial", Font.PLAIN, 25));
+		
+		resolucion.setAlignmentX(Component.CENTER_ALIGNMENT);
+		resolucion.setMaximumSize(new Dimension(200,26));
+		resolucion.addItem("500x600");
+		resolucion.addItem("1000x1200");
+		
 		error_label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		error_label.setFont(new Font("Arial", Font.PLAIN, 10));
 		error_label.setVisible(true);
@@ -164,6 +175,8 @@ public class Partida {
 		interfaz.add(nombreJugador_textField);
 		interfaz.add(nombreJugador2_label);
 		interfaz.add(nombreJugador2_textField);
+		interfaz.add(resolucion_label);
+		interfaz.add(resolucion);
 		interfaz.add(Box.createVerticalStrut(10));
 		interfaz.add(botonJugar);
 		interfaz.add(error_label);
@@ -173,6 +186,7 @@ public class Partida {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombre = nombreJugador_textField.getText();
 				String nombre2 = nombreJugador2_textField.getText();
+				int multiplicador = resolucion.getSelectedIndex() + 1;
 				if ( !nombre.equals("") && !nombre2.equals("")) {
 					if ( nombre.equals(nombre2) ) {
 						error_label.setText("Los nombres de los jugadores deben ser diferentes");
@@ -182,8 +196,8 @@ public class Partida {
 						jugadorActual = primerJugador;
 						menu.setVisible(false);
 						pantallaPrincipal.remove(menu);
-						tablero = new Tablero();
-						prepararTablero(tablero);
+						tablero = new Tablero(400 * multiplicador, 400 * multiplicador);
+						prepararTablero(tablero , multiplicador);
 						for ( Casilla[] casillas : tablero.getCasillas()) {
 							for ( Casilla casilla : casillas ) {
 								casilla.addMouseListener(new MouseAdapter() {
@@ -249,8 +263,8 @@ public class Partida {
 						informacionUsuario = new JLabel();
 						informacionCombate = new JLabel();
 						
-						interfazUsuario.setPreferredSize(new Dimension(450,140));
-						texto.setPreferredSize(new Dimension(450,50));
+						interfazUsuario.setPreferredSize(new Dimension(450 * multiplicador,140 * multiplicador));
+						texto.setPreferredSize(new Dimension(450 * multiplicador,50 * multiplicador));
 						interfazUsuario.add(texto);
 						interfazUsuario.add(botonRendirse);
 						texto.add(informacionUsuario);
@@ -259,11 +273,14 @@ public class Partida {
 						texto.setBackground(Color.WHITE);
 						interfazUsuario.setVisible(true);
 						
-						informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
-						informacionCombate.setFont(new Font("Arial", Font.PLAIN, 12));
+						botonRendirse.setFont(new Font("Arial", Font.PLAIN, 12 * multiplicador));
+						informacionUsuario.setFont(new Font("Arial", Font.PLAIN, 12 * multiplicador));
+						informacionCombate.setFont(new Font("Arial", Font.PLAIN, 12 * multiplicador));
 						
 						maestro.add(tablero);
 						maestro.add(interfazUsuario);
+						pantallaPrincipal.setMinimumSize(new Dimension(500 * multiplicador,600 * multiplicador));
+						pantallaPrincipal.setPreferredSize(new Dimension(500 * multiplicador,600 * multiplicador));
 						pantallaPrincipal.add(maestro);
 					}
 				} else {
