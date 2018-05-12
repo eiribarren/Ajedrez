@@ -13,17 +13,17 @@ import java.awt.Font;
  */
 public class Tablero extends JPanel{
 	/**
-	 * Constante COLUMNAS nos indica el número de columnas del tablero.
+	 * Constante COLUMNAS nos indica el n&uacute;mero de columnas del tablero.
 	 */
 	private final int COLUMNAS = 8;
 	
 	/**
-	 * Constante FILAS nos indica el número de filas del tablero.
+	 * Constante FILAS nos indica el n&uacute;mero de filas del tablero.
 	 */
 	private final int FILAS = 8;
 	
 	/**
-	 * Mátriz casillas donde se guardarán las casillas.
+	 * m&aacute;triz casillas donde se guardar&aacute;n las casillas.
 	 */
 	private Casilla[][] casillas = new Casilla[FILAS][COLUMNAS];
 	
@@ -41,10 +41,10 @@ public class Tablero extends JPanel{
 	}
 	
 	/**
-	 * Función que prepara la interfaz del tablero.
-	 * Primero crea un {@link JPanel} al que se le aplica un layout de tipo {@link GridLayout} y a continuación 
-	 * instancía las casillas y las guarda en la mátriz casillas, luego añade las casillas en el {@link JPanel} tablero 
-	 * y finalmente añade este al propio tablero.
+	 * Funci&oacute;n que prepara la interfaz del tablero.
+	 * Primero crea un {@link JPanel} al que se le aplica un layout de tipo {@link GridLayout} y a continuaciï¿½n 
+	 * instancï¿½a las casillas y las guarda en la m&aacute;triz casillas, luego a&ntilde;ade las casillas en el {@link JPanel} tablero 
+	 * y finalmente a&ntilde;ade este al propio tablero.
 	 */
 	public void prepararInterfaz() {
 		JPanel tablero = new JPanel();
@@ -77,7 +77,7 @@ public class Tablero extends JPanel{
 	}
 	
 	/**
-	 * Función que selecciona una casilla, si hay casillas seleccionadas (rojas) las deselecciona.
+	 * Funci&oacute;n que selecciona una casilla, si hay casillas seleccionadas (rojas) las deselecciona.
 	 * @param casilla la casilla a seleccionar.
 	 */
 	public void setCasillaEnFoco(Casilla casilla) {
@@ -92,7 +92,7 @@ public class Tablero extends JPanel{
 	}
 	
 	/**
-	 * Función que retorna la casilla seleccionada.
+	 * Funci&oacute;n que retorna la casilla seleccionada.
 	 * @return la casilla seleccionada.
 	 */
 	public Casilla getCasillaEnFoco() {
@@ -100,7 +100,7 @@ public class Tablero extends JPanel{
 	}
 	
 	/**
-	 * Función que retorna la mátriz de casillas del tablero.
+	 * Funci&oacute;n que retorna la m&aacute;triz de casillas del tablero.
 	 * @return las casillas del tablero.
 	 */
 	public Casilla[][] getCasillas() {
@@ -108,7 +108,7 @@ public class Tablero extends JPanel{
 	}
 	
 	/**
-	 * Función para agregar piezas al tablero.
+	 * Funci&oacute;n para agregar piezas al tablero.
 	 * @param piezas Las piezas a agregar al tablero.
 	 */
 	public void ponerPiezas(Pieza[] piezas) {

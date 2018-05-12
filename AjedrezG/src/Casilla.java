@@ -22,8 +22,8 @@ public class Casilla extends JPanel{
 	/**
 	 * Constructor de casilla
 	 * @param color color de la casilla.
-	 * @param fila posición vertical de la casilla.
-	 * @param columna posición horizontal de la casilla.
+	 * @param fila posici&oacute;n vertical de la casilla.
+	 * @param columna posici&oacute;n horizontal de la casilla.
 	 */
 	public Casilla(Color color, int fila, int columna) {
 		super();
@@ -37,7 +37,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que cambia el color de la casilla a rojo, cambia el cursor a una mano y la marca como seleccionada.
+	 * Funci&oacute;n que cambia el color de la casilla a rojo, cambia el cursor a una mano y la marca como seleccionada.
 	 */
 	public void focus() {
 		this.setBackground(color.RED);
@@ -46,7 +46,7 @@ public class Casilla extends JPanel{
 	}
 
 	/**
-	 * Función que deselecciona la casilla, devuelve el cursor a la normalidad y le cambia el color al que tenia al
+	 * Funci&oacute;n que deselecciona la casilla, devuelve el cursor a la normalidad y le cambia el color al que tenia al
 	 * principio.
 	 */
 	public void unfocus() {
@@ -57,9 +57,9 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función para agregar una pieza a la casilla.
+	 * Funci&oacute;n para agregar una pieza a la casilla.
 	 * @param pieza pieza a mover a esta casilla.
-	 * @return pieza que tenía la casilla o null si no tenía.
+	 * @return pieza que tenï¿½a la casilla o null si no tenï¿½a.
 	 */
 	public Pieza ponerPieza( Pieza pieza ) {
 		Pieza piezaDestruida = null;
@@ -73,7 +73,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que quita la pieza de la casilla y la retorna.
+	 * Funci&oacute;n que quita la pieza de la casilla y la retorna.
 	 * @return pieza que tenia la casilla.
 	 */
 	public Pieza quitarPieza() {
@@ -83,7 +83,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que comprueba si la casilla tiene alguna pieza.
+	 * Funci&oacute;n que comprueba si la casilla tiene alguna pieza.
 	 * @return true si tiene una pieza y false si no.
 	 */
 	public boolean tienePieza() {
@@ -95,7 +95,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que retorna la pieza de la casilla.
+	 * Funci&oacute;n que retorna la pieza de la casilla.
 	 * @return pieza que tiene la casilla o null si no tiene.
 	 */
 	public Pieza getPieza() {
@@ -103,7 +103,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que retorna la columna de la casilla.
+	 * Funci&oacute;n que retorna la columna de la casilla.
 	 * @return columna de la casilla.
 	 */
 	public int getColumna() {
@@ -111,7 +111,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que retorna la fila de la casilla.
+	 * Funci&oacute;n que retorna la fila de la casilla.
 	 * @return fila de la casilla.
 	 */
 	public int getFila() {
@@ -119,7 +119,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función estática de {@link Casilla} que asigna las casillas seleccionadas (rojas).
+	 * Funci&oacute;n est&aacute;tica de {@link Casilla} que asigna las casillas seleccionadas (rojas).
 	 * @param casillasRojas casillas seleccionadas.
 	 */
 	public static void setCasillasRojas( Casilla[] casillasRojas ) {
@@ -132,7 +132,7 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que retorna las casillas seleccionadas actualmente.
+	 * Funci&oacute;n que retorna las casillas seleccionadas actualmente.
 	 * @return casillas seleccionadas actualmente.
 	 */
 	public static Casilla[] getCasillasRojas() {
@@ -140,15 +140,15 @@ public class Casilla extends JPanel{
 	}
 	
 	/**
-	 * Función que comprueba si la casilla está seleccionada.
-	 * @return true si está seleccionada y false si no.
+	 * Funci&oacute;n que comprueba si la casilla est&aacute; seleccionada.
+	 * @return true si est&aacute; seleccionada y false si no.
 	 */
 	public boolean isFocused() {
 		return this.focused;
 	}
 	
 	/**
-	 * Sobreescritura de la función toString que retorna el objeto en forma de string
+	 * Sobreescritura de la Funci&oacute;n toString que retorna el objeto en forma de string
 	 * @return cadena de texto "Casilla [numero de fila] : [ numero de columna ]"
 	 */
 	public String toString() {

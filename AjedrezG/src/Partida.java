@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * 
  * @author Epumer
  * @author Jan
- * @author Andr�s
+ * @author Andr&eacute;s
  * @author Eric
  * 
  */
@@ -42,9 +42,9 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que prepara un tablero agregandole las piezas, define un array de 32 piezas y luego con un for de 8 
-	 * iteraciones instanc�a todas las piezas en su posici�n a base de sumar valores al �ndice, luego se recorre 
-	 * el array de piezas y se cambia el tama�o de estas y finalmente se agregan al tablero.
+	 * Funci&oacute;n que prepara un tablero agregandole las piezas, define un array de 32 piezas y luego con un for de 8 
+	 * iteraciones instanc&iacute;a todas las piezas en su posici&oacute;n a base de sumar valores al &iacute;ndice, luego se recorre 
+	 * el array de piezas y se cambia el tama&ntilde;o de estas y finalmente se agregan al tablero.
 	 * @param tablero el tablero que se quiere preparar
 	 */
 	public static void prepararTablero(Tablero tablero) {
@@ -80,26 +80,26 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que prepara la interfaz del menu principal, aqui se define el t�tulo que se muestra en la aplicaci�n,
-	 * a continuaci�n se crean dos {@link JPanel}: uno para el menu y el otro para la interfaz, tambi�n crea cuatro
-	 * {@link JLabel}: uno para el t�tulo, dos para los nombres de los jugadores y el �ltimo para mostrar errores 
+	 * Funci&oacute;n que prepara la interfaz del menu principal, aqui se define el t&iacute;tulo que se muestra en la aplicaci&oacute;n,
+	 * a continuaci&oacute;n se crean dos {@link JPanel}: uno para el menu y el otro para la interfaz, tambi&eacute;n crea cuatro
+	 * {@link JLabel}: uno para el t&iacute;tulo, dos para los nombres de los jugadores y el &uacute;ltimo para mostrar errores 
 	 * al usuario, seguidamente crea dos {@link JTextField} para introducir los nombres de los jugadores y finalmente
 	 * un {@link JButton} para comenzar a jugar.
 	 * 
-	 * Se realizan ajustes de tama�os y alineaci�n de la interfaz, y se a�aden al {@link JPanel} de la interfaz.
+	 * Se realizan ajustes de tama&ntilde;os y alineaci&oacute;n de la interfaz, y se a&ntilde;aden al {@link JPanel} de la interfaz.
 	 * 
-	 * A continuaci�n se a�ade un {@link ActionListener} al {@link JButton} de jugar que provoca que al clicar el bot�n
-	 * compruebe si los valores introducidos como nombres de jugador son correctos, en caso de que no lo sean mostrar�
-	 * un error en la {@link JLabel} que creamos para errores y en caso de que todo est� correcto instanciar� dos
+	 * A continuaci�&oacute;n se a&ntilde;ade un {@link ActionListener} al {@link JButton} de jugar que provoca que al clicar el bot&oacute;n
+	 * compruebe si los valores introducidos como nombres de jugador son correctos, en caso de que no lo sean mostrar&aacute;
+	 * un error en la {@link JLabel} que creamos para errores y en caso de que todo est&aacute; correcto instanciar&aacute; dos
 	 * objetos de la clase {@link Jugador} para el primer y segundo jugador, y asignara al primer jugador como 
-	 * jugador actual. Luego se ocultar� la interfaz del men� y se instanciar� el tablero, una vez instanciado a�ade
-	 * un MouseAdapter a trav�s de la funci�n addMouseListener(MouseListener l) en cada una de las
-	 * casillas del tablero, este {@link MouseAdapter} se disparar� en cuanto cliquemos una casilla y si esta casilla
-	 * no esta roja y tiene una pieza, nos mostrar� las posiciones donde podremos mover esta cambiando el color de las
-	 * casillas que se encuentren en dichas posiciones, en cambio si clicamos una casilla de color rojo mover� la pieza
-	 * que ten�a la casilla previamente seleccionada.
+	 * jugador actual. Luego se ocultar&aacute; la interfaz del men&uacute; y se instanciar&aacute; el tablero, una vez instanciado a&ntilde;ade
+	 * un MouseAdapter a trav&eacute;s de la Funci&oacute;n addMouseListener(MouseListener l) en cada una de las
+	 * casillas del tablero, este {@link MouseAdapter} se disparar&aacute; en cuanto cliquemos una casilla y si esta casilla
+	 * no esta roja y tiene una pieza, nos mostrar&aacute; las posiciones donde podremos mover esta cambiando el color de las
+	 * casillas que se encuentren en dichas posiciones, en cambio si clicamos una casilla de color rojo mover&aacute; la pieza
+	 * que ten&iacute;a la casilla previamente seleccionada.
 	 * 
-	 * Finalmente se muestra informaci�n de la partida en forma de texto.
+	 * Finalmente se muestra informaci&oacute;n de la partida en forma de texto.
 	 */
 	public static void prepararInterfazMenu() {
 		pantallaPrincipal.setTitle("Ajedrez");
@@ -253,7 +253,7 @@ public class Partida {
 						pantallaPrincipal.add(maestro);
 					}
 				} else {
-					error_label.setText("No se ha introducido el nombre de alg�n jugador");
+					error_label.setText("No se ha introducido el nombre de algún jugador");
 				}
 			}
 			
@@ -265,11 +265,11 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que comprueba los movimientos posibles de las piezas, esto lo hace creando un array de {@link Casilla}
-	 * donde guardar� las casillas donde se puede mover a la pieza seleccionada. A continuaci�n recorre la m�triz de
+	 * Funci&oacute;n que comprueba los movimientos posibles de las piezas, esto lo hace creando un array de {@link Casilla}
+	 * donde guardar&aacute; las casillas donde se puede mover a la pieza seleccionada. A continuaci&oacute;n recorre la m&aacute;triz de
 	 * movimientos que puede hacer la pieza y comprueba si algo impide que se realize alguno, como podria ser que esta
 	 * en los limites del tablero o que una pieza la bloquea. Si el movimiento pasa todas las comprobaciones se
-	 * almacena en un array de {@link Casilla}, el cu�l finalmente se retorna.
+	 * almacena en un array de {@link Casilla}, el cu&aacute;l finalmente se retorna.
 	 * @param pieza la pieza  a la que queremos comprobar los movimientos posibles.
 	 * @param casillas los movimientos que puede realizar la pieza.
 	 * @return las casillas donde se puede mover la pieza.
@@ -415,8 +415,8 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que comprueba si el rey se encuentra amenazado y se debe declarar Jaque, esto lo hace recibiendo los
-	 * movimientos posibles de una pieza y comprobando si alguno de estos incluye una casilla donde est� el rey rival.
+	 * Funci&oacute;n que comprueba si el rey se encuentra amenazado y se debe declarar Jaque, esto lo hace recibiendo los
+	 * movimientos posibles de una pieza y comprobando si alguno de estos incluye una casilla donde est&aacute; el rey rival.
 	 * @param movimientos los movimientos que puede hacer la pieza.
 	 * @return true si es jaque y false si no.
 	 */
@@ -522,7 +522,7 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que acaba la partida quitando todos los MouseListeners que permit�an jugar y mostrando un
+	 * Funci&oacute;n que acaba la partida quitando todos los MouseListeners que permit&iacute;an jugar y mostrando un
 	 * mensaje del ganador.
 	 */
 	public static void acabarPartida() {
@@ -537,7 +537,7 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que cambia el turno de los jugadores
+	 * Funci&oacute;n que cambia el turno de los jugadores
 	 */
 	public static void cambiarJugadorActual() {
 		if ( jugadorActual == primerJugador ) {
@@ -548,9 +548,9 @@ public class Partida {
 	}
 	
 	/**
-	 * Funci�n que cambia el texto de la interfaz
-	 * @param text cadena de texto que se mostrar� por la interfaz.
-	 * @param label cadena de texto para identificar en que sitio se mostrar� el texto.
+	 * Funci&oacute;n que cambia el texto de la interfaz
+	 * @param text cadena de texto que se mostrar&aacute; por la interfaz.
+	 * @param label cadena de texto para identificar en que sitio se mostrar&aacute; el texto.
 	 */
 	public static void setText(String text, String label) {
 		if ( label.equals("informacionUsuario")) {
