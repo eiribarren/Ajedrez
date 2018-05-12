@@ -37,6 +37,7 @@ public class Partida {
 	static Casilla[] movimientosEnJaque;
 	static Casilla[] movimientosRey;
 	static boolean jaque = false;
+	static boolean jaqueMate = false;
 	
 	public static void main(String[] args) { 
 		prepararInterfazMenu();
@@ -214,7 +215,20 @@ public class Partida {
 													setText("", "informacionCombate");
 												}
 												if (comprobarJaque(piezaEnFoco)) {
-													setText("Jaque!","informacionCombate");
+													if ( !comprobarBloqueo( movimientosEnJaque, jugadorActual.getColor()) ) {
+														jaqueMate = true;
+													}
+													for ( Casilla movimientoRey : movimientosRey ) {
+														if ( movimientoRey != null ) {
+															jaqueMate = false;
+														}
+													}
+													if ( jaqueMate ) {
+														setText("Jaque Mate","informacionCombate");
+														acabarPartida();
+													} else {
+														setText("Jaque!","informacionCombate");
+													}
 												};
 												cambiarJugadorActual();
 												for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
@@ -476,11 +490,6 @@ public class Partida {
 						}
 					}
 					movimientosRey = comprobarMate((Rey)movimiento.getPieza());
-					if ( movimientosRey.length == 0 ) {
-						setText("Jaque Mate","informacionCombate");
-						acabarPartida();
-						return false;
-					}
 					jaque = true;
 					return true;
 				}
@@ -530,14 +539,18 @@ public class Partida {
 	 * @param color el color de la pieza a bloquear.
 	 * @return true si se puede bloquear la pieza y false si no.
 	 */
-	public static boolean comprobarBloqueo( Casilla[] casillas, Color color ) {
-		for ( Casilla casilla : casillas ) {
-			if ( casilla.tienePieza() ) {
-				if ( casilla.getPieza().getColor() != color ) {
-					Casilla[] movimientosProtectores = comprobarMovimientos(casilla.getPieza(), tablero.getCasillas());
-					for ( Casilla movimientoProtector : movimientosProtectores ) {
-						if ( movimientoProtector == casilla ) {
-							return true;
+	public static boolean comprobarBloqueo( Casilla[] movimientosEnJaque, Color color ) {
+		for ( Casilla movimientoEnJaque : movimientosEnJaque ) {
+			for ( Casilla casillas[] : tablero.getCasillas() ) {
+				for ( Casilla casilla : casillas ) {
+					if ( casilla.tienePieza() ) {
+						if ( casilla.getPieza().getColor() != color ) {
+							Casilla[] movimientosProtectores = comprobarMovimientos(casilla.getPieza(), tablero.getCasillas());
+							for ( Casilla movimientoProtector : movimientosProtectores ) {
+								if ( movimientoProtector == movimientoEnJaque ) {
+									return true;
+								}
+							}
 						}
 					}
 				}
