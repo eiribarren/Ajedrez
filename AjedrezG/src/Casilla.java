@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.event.*;
 /**
  * Clase {@link Casilla} que se puede utilizar para construir un tablero.
  * @author Epumer
@@ -24,6 +23,8 @@ public class Casilla extends JPanel{
 	 * @param color color de la casilla.
 	 * @param fila posici&oacute;n vertical de la casilla.
 	 * @param columna posici&oacute;n horizontal de la casilla.
+	 * @param ancho ancho de la casilla
+	 * @param alto alto de la casilla
 	 */
 	public Casilla(Color color, int fila, int columna, int ancho, int alto) {
 		super();
@@ -69,6 +70,7 @@ public class Casilla extends JPanel{
 		}
 		this.pieza = pieza;
 		this.add(pieza);
+		this.repaint();
 		return piezaDestruida;
 	}
 	

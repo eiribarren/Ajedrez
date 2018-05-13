@@ -36,6 +36,9 @@ public class Tablero extends JPanel{
 	
 	/**
 	 * Constructor del tablero.
+	 * 
+	 * @param ancho ancho del tablero
+	 * @param alto alto del tablero
 	 */
 	public Tablero(int ancho, int alto) {
 		prepararInterfaz(ancho, alto);
@@ -47,6 +50,8 @@ public class Tablero extends JPanel{
 	 * Primero crea un {@link JPanel} al que se le aplica un layout de tipo {@link GridLayout} y a continuaci�n 
 	 * instanc�a las casillas y las guarda en la m&aacute;triz casillas, luego a&ntilde;ade las casillas en el {@link JPanel} tablero 
 	 * y finalmente a&ntilde;ade este al propio tablero.
+	 * @param ancho ancho del tablero
+	 * @param alto alto del tablero
 	 */
 	public void prepararInterfaz(int ancho, int alto) {
 		JPanel tablero = new JPanel();
