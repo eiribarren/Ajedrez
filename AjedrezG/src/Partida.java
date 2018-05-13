@@ -2,6 +2,7 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,12 +34,17 @@ public class Partida {
 	static Tablero tablero;
 	static Jugador jugadorActual;
 	static MouseAdapter mousead;
+	static JPanel maestro;
+	static JPanel interfazUsuario;
+	static JPanel texto;
+	static JPanel promocion_panel;
 	static JLabel informacionUsuario;
 	static JLabel informacionCombate;
 	static Casilla[] movimientosEnJaque;
 	static Casilla[] movimientosRey;
 	static boolean jaque = false;
 	static boolean jaqueMate = false;
+	static boolean enPromocion = false;
 	
 	public static void main(String[] args) { 
 		prepararInterfazMenu();
@@ -50,6 +56,7 @@ public class Partida {
 	 * iteraciones instanc&iacute;a todas las piezas en su posici&oacute;n a base de sumar valores al &iacute;ndice, luego se recorre 
 	 * el array de piezas y se cambia el tama&ntilde;o de estas y finalmente se agregan al tablero.
 	 * @param tablero el tablero que se quiere preparar
+	 * @param multiplicador multiplicador utilizado para calcular la resoluci&oacute;n
 	 */
 	public static void prepararTablero(Tablero tablero, int multiplicador ) {
 		Pieza[] piezas = new Pieza[32];
@@ -118,7 +125,7 @@ public class Partida {
 		JTextField nombreJugador2_textField = new JTextField();
 		JButton botonJugar = new JButton();
 		JComboBox resolucion = new JComboBox();
-		menu.setPreferredSize(new Dimension(500,600));
+		menu.setPreferredSize(new Dimension(400,420));
 		menu.setVisible(true);
 		
 		interfaz.setLayout(new BoxLayout(interfaz, BoxLayout.PAGE_AXIS));
@@ -157,8 +164,8 @@ public class Partida {
 		
 		resolucion.setAlignmentX(Component.CENTER_ALIGNMENT);
 		resolucion.setMaximumSize(new Dimension(200,26));
-		resolucion.addItem("500x600");
-		resolucion.addItem("1000x1200");
+		resolucion.addItem("920x430");
+		resolucion.addItem("1840x860");
 		
 		error_label.setAlignmentX(Component.CENTER_ALIGNMENT);
 		error_label.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -203,51 +210,46 @@ public class Partida {
 								casilla.addMouseListener(new MouseAdapter() {
 									
 									public void mouseClicked(MouseEvent e) {
-										
-										if ( !casilla.isFocused() ) {
-											Pieza pieza = casilla.getPieza();
-											if ( pieza != null ) {								
-												if ( jugadorActual.getColor() == pieza.getColor()) {
-													Casilla.setCasillasRojas(comprobarMovimientos(pieza, tablero.getCasillas()));
-												}
-											}
-										} else {
-											Casilla casillaEnFoco = tablero.getCasillaEnFoco();
-											Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
-											Pieza piezaDestruida = null;
-											if ( piezaEnFoco != null ) {
-												piezaEnFoco.setPosicion(casilla.getFila(), casilla.getColumna());
-												piezaDestruida = casilla.ponerPieza(piezaEnFoco);
-											
-												casillaEnFoco.repaint();
-												setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
-												if ( piezaDestruida instanceof Rey ) {
-													acabarPartida();
-												} else if ( piezaDestruida != null ) {
-													setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
-												} else {
-													setText("", "informacionCombate");
-												}
-												if (comprobarJaque(piezaEnFoco)) {
-													if ( !comprobarBloqueo( movimientosEnJaque, jugadorActual.getColor()) ) {
-														jaqueMate = true;
+										if ( !enPromocion ) {
+											if ( !casilla.isFocused() ) {
+												Pieza pieza = casilla.getPieza();
+												if ( pieza != null ) {								
+													if ( jugadorActual.getColor() == pieza.getColor()) {
+														Casilla.setCasillasRojas(comprobarMovimientos(pieza, tablero.getCasillas()));
 													}
-													for ( Casilla movimientoRey : movimientosRey ) {
-														if ( movimientoRey != null ) {
-															jaqueMate = false;
-														}
-													}
-													if ( jaqueMate ) {
-														setText("Jaque Mate","informacionCombate");
+												}
+											} else {
+												Casilla casillaEnFoco = tablero.getCasillaEnFoco();
+												Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
+												Pieza piezaDestruida = null;
+												if ( piezaEnFoco != null ) {
+													piezaEnFoco.setPosicion(casilla.getFila(), casilla.getColumna());
+													piezaDestruida = casilla.ponerPieza(piezaEnFoco);
+													
+													setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
+													if ( piezaDestruida instanceof Rey ) {
 														acabarPartida();
+													} else if ( piezaDestruida != null ) {
+														setText("La pieza " + piezaEnFoco.toString() + " del jugador " + jugadorActual.toString() + " ha destruido la pieza " + piezaDestruida.toString() + " del rival.", "informacionCombate");
 													} else {
-														setText("Jaque!","informacionCombate");
+														setText("", "informacionCombate");
 													}
-												};
-												cambiarJugadorActual();
-												for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
-													if ( casillaRoja != null ) {
-														casillaRoja.unfocus();
+													
+													if ( piezaEnFoco instanceof Peon && ( piezaEnFoco.getFila() == 7 || piezaEnFoco.getFila() == 0 )) {
+														promocion((Peon)piezaEnFoco, casilla, multiplicador);
+														enPromocion = true;
+													}
+													
+													casillaEnFoco.repaint();
+													
+													if ( !enPromocion ) {
+														acabarTurno(piezaEnFoco);
+													}
+													
+													for ( Casilla casillaRoja : Casilla.getCasillasRojas() ) {
+														if ( casillaRoja != null ) {
+															casillaRoja.unfocus();
+														}
 													}
 												}
 											}
@@ -256,9 +258,10 @@ public class Partida {
 								});
 							}
 						}
-						JPanel maestro = new JPanel();
-						JPanel interfazUsuario = new JPanel();
-						JPanel texto = new JPanel();
+						maestro = new JPanel();
+						interfazUsuario = new JPanel();
+						texto = new JPanel();
+						
 						BotonRendirse botonRendirse = new BotonRendirse();
 						informacionUsuario = new JLabel();
 						informacionCombate = new JLabel();
@@ -279,8 +282,9 @@ public class Partida {
 						
 						maestro.add(tablero);
 						maestro.add(interfazUsuario);
-						pantallaPrincipal.setMinimumSize(new Dimension(500 * multiplicador,600 * multiplicador));
-						pantallaPrincipal.setPreferredSize(new Dimension(500 * multiplicador,600 * multiplicador));
+						pantallaPrincipal.setMaximumSize(new Dimension(920 * multiplicador,430 * multiplicador));
+						pantallaPrincipal.setPreferredSize(new Dimension(920 * multiplicador,430 * multiplicador));
+						pantallaPrincipal.setMinimumSize(new Dimension(920 * multiplicador,430 * multiplicador));
 						pantallaPrincipal.add(maestro);
 					}
 				} else {
@@ -289,7 +293,7 @@ public class Partida {
 			}
 			
 		}); 
-		menu.add(Box.createRigidArea(new Dimension(500,100)));
+		menu.add(Box.createRigidArea(new Dimension(400,50)));
 		menu.add(interfaz);
 		pantallaPrincipal.add(menu);
 		pantallaPrincipal.pack();
@@ -517,7 +521,9 @@ public class Partida {
 	}
 	
 	/**
-	 * Comprueba si hay alg&uacute;n movimiento del rey que no est&eacute; amenazado por el rival.
+	 * Comprueba si hay alg&uacute;n movimiento del rey que no est&eacute; amenazado por el rival, esto lo hace
+	 * recorriendo todas las piezas y si son del color contrario al del rey comprueba sus movimientos para ver si
+	 * alguno es igual a algún movimiento del rey.
 	 * @param rey el rey para comprobar sus movimientos,
 	 * @return movimientos que puede hacer el rey de forma segura.
 	 */
@@ -552,7 +558,7 @@ public class Partida {
 	
 	/**
 	 * Comprueba si alguna pieza puede posicionarse en las casillas introducidas.
-	 * @param casillas las casillas para comprobar si una pieza puede moverse ah&iacute;.
+	 * @param movimientosEnJaque las casillas para comprobar si una pieza puede moverse ah&iacute;.
 	 * @param color el color de la pieza a bloquear.
 	 * @return true si se puede bloquear la pieza y false si no.
 	 */
@@ -599,6 +605,76 @@ public class Partida {
 		} else {
 			jugadorActual = primerJugador;
 		}
+	}
+	
+	/**
+	 * Funci&oacute;n que añade una interfaz para promocionar al Pe&oacute;.
+	 * @param peon el pe&oacute;n que ha llegado al final del tablero y va a promocionarse.
+	 * @param posicion la casilla donde se encuentra el pe&oacute;n
+	 * @param multiplicador multiplicador para aumentar el tama&ntilde; del pe&oacute;n.
+	 */
+	public static void promocion(Peon peon, Casilla posicion, int multiplicador) {
+		promocion_panel = new JPanel();
+		promocion_panel.setMinimumSize(new Dimension(450 * multiplicador, 50 * multiplicador));
+		promocion_panel.setPreferredSize(new Dimension(450 * multiplicador, 50 * multiplicador));
+		promocion_panel.setBackground(Color.WHITE);
+		
+		JLabel promocion_label = new JLabel();
+		
+		promocion_label.setFont(new Font("Arial", Font.PLAIN, 12 * multiplicador));
+		promocion_label.setText("Promoción: ");
+		promocion_panel.add(promocion_label);
+		
+		Pieza[] piezas_promocion = new Pieza[4];
+		piezas_promocion[0] = new Reina(peon.getColor(), peon.getFila(), peon.getColumna());
+		piezas_promocion[1] = new Torre(peon.getColor(), peon.getFila(), peon.getColumna());
+		piezas_promocion[2] = new Alfil(peon.getColor(), peon.getFila(), peon.getColumna());
+		piezas_promocion[3] = new Caballo(peon.getColor(), peon.getFila(), peon.getColumna());
+		for ( Pieza pieza_promocion : piezas_promocion ) {
+			pieza_promocion.setBackground(Color.WHITE);
+			pieza_promocion.cambiarTamano(50 * multiplicador, 50 * multiplicador);
+			pieza_promocion.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					posicion.ponerPieza(pieza_promocion);
+					interfazUsuario.remove(promocion_panel);
+					interfazUsuario.repaint();
+					for ( MouseListener ml : pieza_promocion.getMouseListeners() ) {
+						pieza_promocion.removeMouseListener(ml);
+					}
+					enPromocion = false;
+					setText("El jugador " + jugadorActual.toString() + " ha promocinado su Peón a " + pieza_promocion, "informacionUsuario" );
+					acabarTurno( pieza_promocion );
+				}
+			});
+			promocion_panel.add(pieza_promocion);
+		}
+		promocion_panel.setVisible(true);
+		interfazUsuario.add(promocion_panel);
+	}
+	
+	/**
+	 * Funci&oacute;n que acaba el turno y comprueba si hay jaque o jaque mate.
+	 * @param pieza la pieza que se movi&oacute; en el turno actual.
+	 */
+	public static void acabarTurno( Pieza pieza ) {
+		if (comprobarJaque(pieza)) {
+			if ( !comprobarBloqueo( movimientosEnJaque, jugadorActual.getColor()) ) {
+				jaqueMate = true;
+			}
+			for ( Casilla movimientoRey : movimientosRey ) {
+				if ( movimientoRey != null ) {
+					jaqueMate = false;
+				}
+			}
+			if ( jaqueMate ) {
+				setText("Jaque Mate","informacionCombate");
+				acabarPartida();
+			} else {
+				setText("Jaque!","informacionCombate");
+			}
+		};
+		
+		cambiarJugadorActual();
 	}
 	
 	/**

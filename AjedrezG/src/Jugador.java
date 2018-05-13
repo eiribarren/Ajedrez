@@ -1,6 +1,10 @@
 
 import java.awt.Color;
-
+/**
+ * Clase jugador para usar en algún juego
+ * @author Epumer
+ *
+ */
 public class Jugador {
 	private String nombre;
 	private Color color;
