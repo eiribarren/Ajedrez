@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
@@ -8,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- * Clase abstracta que define una pieza para utilizar en algún juego.
+ * Clase abstracta que define una pieza para utilizar en alg&uacute;n juego.
  * @author Epumer
  *
  */
@@ -19,17 +20,17 @@ public abstract class Pieza extends JLabel{
 	protected String identificador;
 	
 	/**
-	 * Entero columna es la posición horizontal de la pieza.
+	 * Entero columna es la posici&oacute;n horizontal de la pieza.
 	 */
 	protected int columna;
 	
 	/**
-	 * Entero fila es la posición vertical de la pieza.
+	 * Entero fila es la posici&oacute;n vertical de la pieza.
 	 */
 	protected int fila;
 	
 	/**
-	 * Cadena de texto que indica la ubicación de una imagen para mostrar la pieza.
+	 * Cadena de texto que indica la ubicaci&oacute;n de una imagen para mostrar la pieza.
 	 */
 	protected String urlImagen;
 	
@@ -39,20 +40,20 @@ public abstract class Pieza extends JLabel{
 	protected Color color;
 	
 	/**
-	 * Función abstracta que retorna los movimientos que puede hacer la pieza.
+	 * Funci&oacute;abstracta que retorna los movimientos que puede hacer la pieza.
 	 * @return matriz de movimientos de la pieza.
 	 */
 	public abstract int[][] getMovimientos();
 	
 	/**
-	 * Función que inicia la pieza, por defecto cambia el cursor a una mano apuntando.
+	 * Funci&oacute;que inicia la pieza, por defecto cambia el cursor a una mano apuntando.
 	 */
 	public void start() {
 		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 	
 	/**
-	 * Función que retorna la columna de la pieza.
+	 * Funci&oacute;que retorna la columna de la pieza.
 	 * @return la columna de la pieza.
 	 */
 	public int getColumna() {
@@ -60,7 +61,7 @@ public abstract class Pieza extends JLabel{
 	}
 	
 	/**
-	 * Función que retorna la fila de la pieza.
+	 * Funci&oacute;que retorna la fila de la pieza.
 	 * @return la fila de la pieza.
 	 */
 	public int getFila() {
@@ -68,7 +69,7 @@ public abstract class Pieza extends JLabel{
 	}
 	
 	/**
-	 * Función para asignar una posición a la pieza.
+	 * Funci&oacute;para asignar una posici&oacute;n a la pieza.
 	 * @param fila la fila a donde queremos mover la pieza.
 	 * @param columna la columna a donde queremos mover la pieza.
 	 */
@@ -78,7 +79,7 @@ public abstract class Pieza extends JLabel{
 	}
 	
 	/**
-	 * Función que retorna el color de la pieza.
+	 * Funci&oacute;que retorna el color de la pieza.
 	 * @return el color de la pieza.
 	 */
 	public Color getColor() {
@@ -86,14 +87,14 @@ public abstract class Pieza extends JLabel{
 	}
 	
 	/**
-	 * Función que convierte la pieza en una cadena de texto.
+	 * Funci&oacute;que convierte la pieza en una cadena de texto.
 	 */
 	public String toString() {
 		return this.identificador;
 	}
 	
 	/**
-	 * Función para cambiar el tamaño de la imagen de la pieza.
+	 * Funci&oacute;para cambiar el tama&ntilde;n de la imagen de la pieza.
 	 * @param ancho el ancho en pixeles que queremos de medida para la imagen.
 	 * @param altura la altura en pixeles que queremos de medida para la imagen.
 	 */
@@ -102,7 +103,13 @@ public abstract class Pieza extends JLabel{
 	        
 	        BufferedImage bi = new BufferedImage(imagen.getWidth(null), imagen.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 	        Graphics2D g = bi.createGraphics();
-	        g.drawImage(imagen,0,altura/2,ancho,altura,null);
+	        if ( altura < 100 ) {
+	        	g.drawImage(imagen,0,altura/2,ancho,altura,null);
+	        } else {
+	        	g.drawImage(imagen,0,0,ancho,altura,null);
+	        }
 	        this.setIcon(new ImageIcon(bi));
+	        this.setPreferredSize(new Dimension(ancho,altura));
+	        this.setMaximumSize(new Dimension(ancho,altura));
 	}
 }

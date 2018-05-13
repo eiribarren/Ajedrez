@@ -1,6 +1,11 @@
-
 import java.awt.Dimension;
 import java.awt.Color;
+
+/**
+ * 
+ * @author Eric
+ *
+ */
 
 public class Torre extends Pieza{
 	public Torre(Color color, int fila, int columna) {
@@ -18,29 +23,37 @@ public class Torre extends Pieza{
 		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
+	
+	/**
+	 * Este metodo primero crea una matriz para guardar los movimientos y a continuaci&oacute;n el primer bucle for 
+	 * comprueba los movimientos horizontales y verticales en direcci&oacute;n sur, el segundo al norte, el tercero 
+	 * hacia el oeste y el cuarto al este.
+	 * 
+	 * @return moviments Los movimientos que puede hacer la torre.
+	 */
 	public int[][] getMovimientos(){
-		int[][] movimientos = new int[28][2];
-		 
-		
+		int[][] moviments = new int[28][2];
+
+
 		for(int i=1;i<8;i++){
-	   		 movimientos[i-1][0] = getFila()+(1*i);
-	   		 movimientos[i-1][1] = getColumna();
-	   	 }
-	   	 
-	   	 for(int i=1;i<8;i++){
-	   		 movimientos[i+6][0] = getFila()-(1*i);
-	   		 movimientos[i+6][1] = getColumna();
-	   	 }
-	   	 
-	   	 for(int i=1;i<8;i++){
-	   		 movimientos[i+13][0] = getFila();
-	   		 movimientos[i+13][1] = getColumna()-(1*i);
-	   	 }
-	   	 
-	   	 for(int i=1;i<8;i++){
-	   		 movimientos[i+20][0] = getFila();
-	   		 movimientos[i+20][1] = getColumna()+(1*i);
-	   	 }
-		return movimientos;
+			moviments[i-1][0] = getFila()+(1*i);
+			moviments[i-1][1] = getColumna();
+		}
+
+		for(int i=1;i<8;i++){
+			moviments[i+6][0] = getFila()-(1*i);
+			moviments[i+6][1] = getColumna();
+		}
+
+		for(int i=1;i<8;i++){
+			moviments[i+13][0] = getFila();
+			moviments[i+13][1] = getColumna()-(1*i);
+		}
+
+		for(int i=1;i<8;i++){
+			moviments[i+20][0] = getFila();
+			moviments[i+20][1] = getColumna()+(1*i);
+		}
+		return moviments;
 	}
 }
