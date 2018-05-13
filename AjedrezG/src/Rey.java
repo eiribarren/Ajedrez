@@ -1,7 +1,11 @@
 
 import java.awt.Dimension;
 import java.awt.Color;
-
+/**
+ * Esta clase instancia a un rey con sus respectivos atributos y movimientos
+ * @author jan_6
+ *
+ */
 public class Rey extends Pieza{
 	public Rey(Color color, int fila, int columna) {
 		this.columna = columna;
@@ -14,10 +18,18 @@ public class Rey extends Pieza{
 		} else {
 			this.urlImagen = "/ReyBlanco.png";
 		}
+		 
 		this.setIcon(new javax.swing.ImageIcon(getClass().getResource(urlImagen)));
 		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
+	/**
+	 * Funcion que recoge una matriz con todos los movimientos posibles del rey,
+	 *  Primero define una matriz con los movimientos.
+	 *  cada grupo de dos matrizes recoje un movimiento hacia delante, hacia atras, hacia los lados y en diagonal.
+	 *  
+	 *  @return devuelve la matriz de movimientos
+	 */
 	public int[][] getMovimientos(){
 		int[][] movimientos = new int[8][2];
 			movimientos[0][0]=getFila()+1;

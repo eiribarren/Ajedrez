@@ -2,6 +2,11 @@
 import java.awt.Dimension;
 import java.awt.Color;
 
+/**
+ * Esta clase instancia a un peon con sus respectivos atributos y movimientos
+ * @author jan_6
+ *
+ */
 public class Peon extends Pieza{
 	private int columnaInicial;
 	private int filaInicial;
@@ -22,7 +27,15 @@ public class Peon extends Pieza{
 		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
-	
+
+	/**
+	 * Funcion que recoge una matriz con todos los movimientos posibles de un peon,
+	 *  Primero define una matriz con los movimientos, crea un multiplicador que hara que las piezas esten abajo (jugador 1)
+	 * o esten arriba (jugador 2), despues ira añadiendo los movimientos posibles,
+	 *  hay un IF que comprueba si la pieza esta en su posicion inicial, en tal  caso podra moverse dos casillas hacia adelante.
+	 *  
+	 *  @return devuelve la matriz de movimientos
+	 */
 	public int[][] getMovimientos(){
 		int[][] movimientos = new int[4][2];
 		int multiplicador;
