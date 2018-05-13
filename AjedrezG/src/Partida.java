@@ -223,8 +223,38 @@ public class Partida {
 												Pieza piezaEnFoco = casillaEnFoco.quitarPieza();
 												Pieza piezaDestruida = null;
 												if ( piezaEnFoco != null ) {
+													
+													if ( piezaEnFoco instanceof Rey ) {
+														
+														if ( casilla.getColumna() - piezaEnFoco.getColumna() == 2 ) {
+															Casilla casillaTorre = tablero.getCasillas()[piezaEnFoco.getFila()][piezaEnFoco.getColumna()+3];
+															casilla.ponerPieza(piezaEnFoco);
+															casillaTorre.getPieza().setPosicion(piezaEnFoco.getFila(),piezaEnFoco.getColumna()+1);
+															((Torre)casillaTorre.getPieza()).setTorreUsada(true);
+															tablero.getCasillas()[piezaEnFoco.getFila()][piezaEnFoco.getColumna()+1].ponerPieza(casillaTorre.quitarPieza());
+															casillaTorre.repaint();
+															
+														}
+														else if ( casilla.getColumna() - piezaEnFoco.getColumna() == -2 ) {
+															Casilla casillaTorre = tablero.getCasillas()[piezaEnFoco.getFila()][piezaEnFoco.getColumna()-4];
+															casilla.ponerPieza(piezaEnFoco);
+															casillaTorre.getPieza().setPosicion(piezaEnFoco.getFila(),piezaEnFoco.getColumna()-1);
+															((Torre)casillaTorre.getPieza()).setTorreUsada(true);
+															tablero.getCasillas()[piezaEnFoco.getFila()][piezaEnFoco.getColumna()-1].ponerPieza(casillaTorre.quitarPieza());
+															casillaTorre.repaint();
+														}
+														else {
+															piezaDestruida = casilla.ponerPieza(piezaEnFoco);
+														}
+														((Rey) piezaEnFoco).setReyUsado(true);
+													}
+													else {
+														piezaDestruida = casilla.ponerPieza(piezaEnFoco);
+													}
+													if ( piezaEnFoco instanceof Torre ) {
+														((Torre)piezaEnFoco).setTorreUsada(true);
+													}
 													piezaEnFoco.setPosicion(casilla.getFila(), casilla.getColumna());
-													piezaDestruida = casilla.ponerPieza(piezaEnFoco);
 													
 													setText("El jugador " + jugadorActual.toString() + " ha movido el " + piezaEnFoco.toString() + " a la " + casilla.toString(), "informacionUsuario");
 													if ( piezaDestruida instanceof Rey ) {
@@ -431,6 +461,33 @@ public class Partida {
 					} else if ( !casillas[movimientoY][movimientoX].tienePieza()) {
 						continue;
 					}
+				}
+				if ( pieza instanceof Rey ) {
+					if ( movimientoX - pieza.getColumna() == 2 ) {
+						if ( !((Rey)pieza).seMovio() ) {
+							Pieza torre;
+							if ( (torre = casillas[pieza.getFila()][pieza.getColumna()+3].getPieza()) instanceof Torre) {
+								if ( !((Torre)torre).seMovio()) {
+									movimientosPosibles[i] = casillas[movimientoY][movimientoX];
+								}
+								
+							}		
+						}
+						continue;
+					}
+					else if ( movimientoX - pieza.getColumna() == -2 ) {
+						if ( !((Rey)pieza).seMovio() ) {
+							Pieza torre;
+							if ( (torre = casillas[pieza.getFila()][pieza.getColumna()-4].getPieza()) instanceof Torre) {
+								if ( !((Torre)torre).seMovio()) {
+									movimientosPosibles[i] = casillas[movimientoY][movimientoX];
+									
+								}
+							}
+						}
+						continue;
+					}
+					
 				}
 				if ( jaque ) {
 					if ( pieza instanceof Rey ) {
