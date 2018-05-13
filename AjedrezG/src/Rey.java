@@ -7,7 +7,10 @@ import java.awt.Color;
  *
  */
 public class Rey extends Pieza{
+	public boolean reyUsado;
+	
 	public Rey(Color color, int fila, int columna) {
+		this.reyUsado = false;
 		this.columna = columna;
 		this.fila = fila;
 		this.identificador = "Rey";
@@ -23,6 +26,12 @@ public class Rey extends Pieza{
 		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
+	public boolean seMovio() {
+		return reyUsado;
+	}
+	public void setReyUsado(boolean reyUsado) {
+		this.reyUsado = reyUsado;
+	}
 	/**
 	 * Funcion que recoge una matriz con todos los movimientos posibles del rey,
 	 *  Primero define una matriz con los movimientos.
@@ -31,7 +40,7 @@ public class Rey extends Pieza{
 	 *  @return devuelve la matriz de movimientos
 	 */
 	public int[][] getMovimientos(){
-		int[][] movimientos = new int[8][2];
+		int[][] movimientos = new int[10][2];
 			movimientos[0][0]=getFila()+1;
 			movimientos[0][1]=getColumna();
 			
@@ -55,6 +64,12 @@ public class Rey extends Pieza{
 			
 			movimientos[7][0]=getFila()-1;
 			movimientos[7][1]=getColumna()-1;
+			
+			movimientos[8][0]=getFila();
+			movimientos[8][1]=getColumna()+2;
+
+			movimientos[9][0]=getFila();
+			movimientos[9][1]=getColumna()-2;
 		return movimientos;
 	}
 }

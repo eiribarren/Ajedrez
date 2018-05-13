@@ -8,7 +8,11 @@ import java.awt.Color;
  */
 
 public class Torre extends Pieza{
+	public boolean torreUsada;
+	
+
 	public Torre(Color color, int fila, int columna) {
+		this.torreUsada = false;
 		this.columna = columna;
 		this.fila = fila;
 		this.identificador = "Torre";
@@ -23,7 +27,15 @@ public class Torre extends Pieza{
 		this.setPreferredSize(new Dimension(50,50));
 		start();
 	}
-	
+
+	public boolean seMovio() {
+		return torreUsada;
+	}
+
+	public void setTorreUsada(boolean torreUsada) {
+		this.torreUsada = torreUsada;
+	}
+
 	/**
 	 * Este metodo primero crea una matriz para guardar los movimientos y a continuaci&oacute;n el primer bucle for 
 	 * comprueba los movimientos horizontales y verticales en direcci&oacute;n sur, el segundo al norte, el tercero 
