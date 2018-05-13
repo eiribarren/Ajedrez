@@ -517,7 +517,9 @@ public class Partida {
 	}
 	
 	/**
-	 * Comprueba si hay alg&uacute;n movimiento del rey que no est&eacute; amenazado por el rival.
+	 * Comprueba si hay alg&uacute;n movimiento del rey que no est&eacute; amenazado por el rival, esto lo hace
+	 * recorriendo todas las piezas y si son del color contrario al del rey comprueba sus movimientos para ver si
+	 * alguno es igual a algún movimiento del rey.
 	 * @param rey el rey para comprobar sus movimientos,
 	 * @return movimientos que puede hacer el rey de forma segura.
 	 */
